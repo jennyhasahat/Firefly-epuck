@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import javax.bluetooth.BluetoothStateException;
-
 import bluetoothing.BluetoothComputer;
 import bluetoothing.BluetoothHandler;
 
@@ -24,8 +22,8 @@ public class Main {
 		epuckBT.initialiseEpuck(1837);
 		try {
 			epuckBT.establishSerialIO();
-		} catch (BluetoothStateException e) {
-			System.err.println("couldn't establish serial");
+		} catch (IOException e) {
+			System.err.println("couldn't establish serial IO with epuck");
 			e.printStackTrace();
 			return;
 		}

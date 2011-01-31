@@ -88,7 +88,7 @@ public class BluetoothComputer implements BluetoothHandler, DiscoveryListener
 		return epuckPaired;
 	}
 
-	public boolean establishSerialIO() throws BluetoothStateException
+	public boolean establishSerialIO() throws IOException
 	{
 		//do nothing if we haven't paired the epuck yet
 		if(!epuckPaired) 
@@ -107,7 +107,7 @@ public class BluetoothComputer implements BluetoothHandler, DiscoveryListener
 			System.out.println("couldn't find epuck's rfcomm service using saved url, running a service search.");
 			if(!searchForEpuckRfcommService())
 			{
-				throw new BluetoothStateException("could not find remote rfcomm service.");
+				throw new IOException("could not find remote rfcomm service.", ioe);
 			}
 			try
 			{
@@ -115,7 +115,7 @@ public class BluetoothComputer implements BluetoothHandler, DiscoveryListener
 			} 
 			catch(IOException ioe2) 
 			{
-				throw new BluetoothStateException("could not establish remote rfcomm service.");
+				throw new IOException("Found, but could not establish remote rfcomm service.", ioe2);
 			}
 		}
 		
@@ -154,14 +154,17 @@ public class BluetoothComputer implements BluetoothHandler, DiscoveryListener
 	
 	public void closeIO()
 	{
-		try 
+		if(serialInitialised)
 		{
-			sendData.close();
-			recData.close();
-			connection.close();
-		} catch (IOException e) {
-			System.err.println("couldn't close IO streams");
-			e.printStackTrace();
+			try 
+			{
+				sendData.close();
+				recData.close();
+				connection.close();
+			} catch (IOException e) {
+				System.err.println("couldn't close IO streams");
+				e.printStackTrace();
+			}
 		}
 		return;
 	}

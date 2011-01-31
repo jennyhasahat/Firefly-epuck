@@ -12,7 +12,7 @@ public interface BluetoothHandler
 {
 	//initialisation stuff
 	public boolean initialiseEpuck(int epuckNumber);
-	public boolean establishSerialIO() throws BluetoothStateException;
+	public boolean establishSerialIO() throws IOException;
 	
 	//actual IO stuff
 	public InputStream getInputStream();
