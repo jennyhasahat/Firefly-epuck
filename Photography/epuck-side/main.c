@@ -27,7 +27,6 @@ void cuteFlash(void)
 
 void takePhoto(void)
 {
-	e_send_uart1_char("taking photo2", 14);
 	e_po3030k_launch_capture(buffer);
 	while(!e_po3030k_is_img_ready());
 	cuteFlash();
@@ -48,10 +47,10 @@ int main(void)
 	//get ch from uart until we receive an x
 	while(ch != 'x')
 	{
+		//is_char checks for incoming data from uart1
 		if(e_ischar_uart1())
 		{
 			e_getchar_uart1(&ch);
-			e_send_uart1_char(&ch, 1);
 		}
 	}
 	takePhoto();

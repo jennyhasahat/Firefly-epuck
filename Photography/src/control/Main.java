@@ -1,11 +1,15 @@
 package control;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
+
+import javax.imageio.ImageIO;
 
 import bluetoothing.BluetoothComputer;
 import bluetoothing.BluetoothHandler;
@@ -31,89 +35,54 @@ public class Main {
 		sendData = epuckBT.getOutputStream();
 	}
 	
-	/**reads in a data packet from the epuck*/
-	private void readPacket1()
+	private void readImage(String filename)
 	{
-		InputStreamReader isr = new InputStreamReader(recData);
-		try {
-			//while(recData.available() > 0 && isr.ready())
-			while(isr.ready())
-			{
-				try {
-					System.out.print(isr.read());
-				} catch (IOException e) {
-					System.err.println("didn't like reading a char");
-					e.printStackTrace();
-				}
-			}
-		} catch (IOException e) {
-			System.err.println("didn't like checking if the input stream reader was ready");
-			e.printStackTrace();
-		}
-		return;
-	}
-	
-	private void readPacket2()
-	{
-		int bufferLimit = 128;
-		BufferedInputStream buffer = new BufferedInputStream(recData, bufferLimit);
-		
-		//wait for input
-		try {
-			while(buffer.available() == 0){}
-		} catch (IOException e1) {
-			System.err.println("error waiting for something from robot");
-			e1.printStackTrace();
-		}	
+		byte bytebuffer[] = new byte[1024];
+		int length;
+		File f = new File(filename);
+		FileOutputStream fstream;
+		BufferedInputStream buff = new BufferedInputStream(recData);
 		
 		try 
 		{
-			while(buffer.available() > 0)
-			{
-				try 
-				{
-					System.out.print((char)buffer.read());
-				} catch (IOException e) {
-					System.err.println("didn't like reading a char");
-					e.printStackTrace();
-				}
-				//buffer.mark(bufferLimit);
-			}
-		} catch (IOException e) {
-			System.err.println("didn't like checking if the input stream reader was ready");
+			fstream = new FileOutputStream(f);
+		} catch (FileNotFoundException e) 
+		{
+			System.err.println("couldn't create a file at "+filename);
 			e.printStackTrace();
-		}
-		System.out.println("\n");
-		return;
-	}
-	
-	/**sends a data packet to the epuck*/
-	private void sendPacket()
-	{
-		BufferedOutputStream buffer = new BufferedOutputStream(sendData);
-		BufferedInputStream in = new BufferedInputStream(System.in);
-		
-		System.out.println("press a key to send: ");
-		int inchar;
-		try {
-			inchar = in.read();
-			System.out.println("you entered "+inchar+" or (char)"+(char)inchar);
-		} catch (IOException e1) {
-			System.err.println("in didn't work somehow");
-			e1.printStackTrace();
 			return;
 		}
+		
+		//code I found on the internet for converting from inputstream to file
 		try 
 		{
-			buffer.write(inchar);	
-			buffer.flush();
-		} 
-		catch (IOException e) 
-		{
-			System.err.println("some troubles sending to epuck");
+			while(buff.available() >0) //length is no bytes read to buffer
+			{
+				length = buff.read(bytebuffer);
+				fstream.write(bytebuffer, 0, length);
+			}
+			fstream.close();
+		} catch (IOException e) {
+			System.err.println("there were IO troubles writing the file");
 			e.printStackTrace();
 		}
 		return;
+	}
+	
+	private void readImage2(String filename)
+	{
+		BufferedImage picture;
+		File f = new File(filename);
+		
+		try {
+			picture = ImageIO.read(new BufferedInputStream(recData));
+			System.out.println("writing image to file");
+			ImageIO.write(picture, "png", f);
+		} catch (IOException e) {
+			System.err.println("ImageIO class couldn't read or possibly write image");
+			e.printStackTrace();
+		}
+		return;	
 	}
 	
 	private void closeIO()
@@ -129,13 +98,16 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Main tmp = new Main();
-		tmp.readPacket2();
-		for(int i=0; i<3; i++)
+		try 
 		{
-			tmp.sendPacket();
-			System.out.println("reading from epuck");
-			tmp.readPacket2();
+			tmp.epuckBT.sendString("x");
+		} catch (IOException e) {
+			System.err.println("couldn't write to epuck");
+			e.printStackTrace();
 		}
+		System.out.println("reading string");
+		tmp.readImage2("./test.jpg");
+		
 		tmp.closeIO();
 		return;
 	}
