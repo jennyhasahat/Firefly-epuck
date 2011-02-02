@@ -17,15 +17,15 @@ Command:
   -Lc:/program files/microchip/mplabc30/v3.25/bin/bin/../../support/dsPIC30F/gld \
   -Lc:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files/microchip/mplabc30/v3.25/bin/bin/../../support/dsPIC33F/gld \
-  e_init_port.o \
-  main.o \
-  e_timers.o \
-  e_calc.o \
-  e_interrupt.o \
-  e_registers.o \
-  C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\I2C\I2C.a \
-  C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a \
-  C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a \
+  obj\main.o \
+  obj\e_timers.o \
+  obj\e_calc.o \
+  obj\e_interrupt.o \
+  obj\e_registers.o \
+  C:\libraries\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a \
+  C:\libraries\official-epuck-lib\library\I2C\I2C.a \
+  C:\libraries\official-epuck-lib\library\uart\e_uart_char.a \
+  C:\libraries\official-epuck-lib\library\motor_led\motor_LED.a \
   -Tp30f6014A.gld.00 \
   --defsym=__MPLAB_BUILD=1 \
   --defsym=__MPLAB_DEBUG=1 \
@@ -40,22 +40,26 @@ Command:
 
 Archive member included because of file (symbol)
 
-C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\I2C\I2C.a(e_I2C_protocol.o)
-                              e_calc.o (e_i2cp_init)
-C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\I2C\I2C.a(e_I2C_master_module.o)
-                              C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\I2C\I2C.a(e_I2C_protocol.o) (e_i2c_init)
-C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_tx_char.o)
-                              main.o (e_send_uart1_char)
-C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_init_uart1.o)
-                              main.o (e_init_uart1)
-C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_rx_char.o)
-                              C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_init_uart1.o) (U1RXRcvCnt)
+C:\libraries\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a(e_init_port.o)
+                              obj\main.o (e_init_port)
+C:\libraries\official-epuck-lib\library\I2C\I2C.a(e_I2C_protocol.o)
+                              obj\e_calc.o (e_i2cp_init)
+C:\libraries\official-epuck-lib\library\I2C\I2C.a(e_I2C_master_module.o)
+                              C:\libraries\official-epuck-lib\library\I2C\I2C.a(e_I2C_protocol.o) (e_i2c_init)
+C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_tx_char.o)
+                              obj\main.o (e_send_uart1_char)
+C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_init_uart1.o)
+                              obj\main.o (e_init_uart1)
+C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_rx_char.o)
+                              C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_init_uart1.o) (U1RXRcvCnt)
+C:\libraries\official-epuck-lib\library\motor_led\motor_LED.a(e_led.o)
+                              obj\main.o (e_set_led)
 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o)
                               (_resetPRI)
 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libpic30-coff.a(data_init_standard.o)
                               c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o) (_data_init_standard)
 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libm-coff.a(divsi3.o)
-                              e_registers.o (__divsi3)
+                              obj\e_registers.o (__divsi3)
 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libm-coff.a(udivsi3.o)
                               c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libm-coff.a(divsi3.o) (__udivsi3)
 
@@ -86,12 +90,12 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100                0xce           0x135  (309)
 .const                       0x1ce                 0xe            0x15  (21)
-.text                        0x1dc               0xf3e          0x16dd  (5853)
-.dinit                      0x111a                0xf0           0x168  (360)
-.text                       0x120a               0x286           0x3c9  (969)
-.isr                        0x1490                 0x2             0x3  (3)
+.text                        0x1dc              0x134e          0x1cf5  (7413)
+.dinit                      0x152a                0xf0           0x168  (360)
+.text                       0x161a               0x2f0           0x468  (1128)
+.isr                        0x190a                 0x2             0x3  (3)
 
-                     Total program memory used (bytes):         0x1d5b  (7515) 5%
+                     Total program memory used (bytes):         0x2412  (9234) 6%
 
 
 Data Memory  [Origin = 0x800, Length = 0x1fa0]
@@ -200,88 +204,95 @@ External Symbols in Program Memory (by address):
                   0x000840                  _e_po3030k_set_flicker_mode
                   0x00085e                  _e_po3030k_set_flicker_detection
                   0x000954                  _e_po3030k_set_flicker_man_set
-                  0x000a14                  _idle_i2c
-                  0x000a44                  _e_i2c_init
-                  0x000a7e                  _e_i2c_reset
-                  0x000ac6                  _e_i2c_enable
-                  0x000ad2                  _e_i2c_disable
-                  0x000ade                  _e_i2c_start
-                  0x000b22                  _e_i2c_restart
-                  0x000b66                  _e_i2c_stop
-                  0x000b9c                  _e_i2c_ack
-                  0x000c02                  _e_i2c_nack
-                  0x000c68                  _e_i2c_read
-                  0x000d14                  _e_i2c_write
-                  0x000d4e                  __MI2CInterrupt
-                  0x000d66                  _e_po3030k_config_cam
-                  0x000fa2                  _e_po3030k_get_bytes_per_pixel
-                  0x000fda                  _e_po3030k_init_cam
-                  0x001012                  __T5Interrupt
-                  0x00105c                  _e_po3030k_launch_capture
-                  0x001074                  _e_po3030k_apply_timer_config
-                  0x001112                  _e_po3030k_is_img_ready
-                  0x00120a                  _e_i2cp_init
-                  0x001212                  _e_i2cp_enable
-                  0x00121a                  _e_i2cp_disable
-                  0x001222                  _e_i2cp_read
-                  0x00126a                  _e_i2cp_write
-                  0x0012a6                  _e_init_port
-                  0x001330                  __U1TXInterrupt
-                  0x001374                  _e_send_uart1_char
-                  0x00138c                  _e_uart1_sending
-                  0x001390                  _takePhoto
-                  0x0013a6                  _main
-                  0x0013ee                  __U1RXInterrupt
-                  0x001406                  _e_ischar_uart1
-                  0x00140e                  _e_getchar_uart1
-                  0x00142a                  __T4Interrupt
-                  0x001462                  _e_init_uart1
-                  0x001490                  __DefaultInterrupt
+                  0x000a14                  _e_set_led
+                  0x000d8e                  _e_set_body_led
+                  0x000dce                  _e_set_front_led
+                  0x000e0e                  _e_led_clear
+                  0x000e24                  _idle_i2c
+                  0x000e54                  _e_i2c_init
+                  0x000e8e                  _e_i2c_reset
+                  0x000ed6                  _e_i2c_enable
+                  0x000ee2                  _e_i2c_disable
+                  0x000eee                  _e_i2c_start
+                  0x000f32                  _e_i2c_restart
+                  0x000f76                  _e_i2c_stop
+                  0x000fac                  _e_i2c_ack
+                  0x001012                  _e_i2c_nack
+                  0x001078                  _e_i2c_read
+                  0x001124                  _e_i2c_write
+                  0x00115e                  __MI2CInterrupt
+                  0x001176                  _e_po3030k_config_cam
+                  0x0013b2                  _e_po3030k_get_bytes_per_pixel
+                  0x0013ea                  _e_po3030k_init_cam
+                  0x001422                  __T5Interrupt
+                  0x00146c                  _e_po3030k_launch_capture
+                  0x001484                  _e_po3030k_apply_timer_config
+                  0x001522                  _e_po3030k_is_img_ready
+                  0x00161a                  _cuteFlash
+                  0x001682                  _takePhoto
+                  0x00169a                  _main
+                  0x0016e2                  _e_i2cp_init
+                  0x0016ea                  _e_i2cp_enable
+                  0x0016f2                  _e_i2cp_disable
+                  0x0016fa                  _e_i2cp_read
+                  0x001742                  _e_i2cp_write
+                  0x00177e                  _e_init_port
+                  0x001808                  __U1TXInterrupt
+                  0x00184c                  _e_send_uart1_char
+                  0x001864                  _e_uart1_sending
+                  0x001868                  __U1RXInterrupt
+                  0x001880                  _e_ischar_uart1
+                  0x001888                  _e_getchar_uart1
+                  0x0018a4                  __T4Interrupt
+                  0x0018dc                  _e_init_uart1
+                  0x00190a                  __DefaultInterrupt
                   0xf8000a                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x001490                  __DefaultInterrupt
+                  0x00190a                  __DefaultInterrupt
                   0xf8000a                  __FGS.sec
-                  0x000d4e                  __MI2CInterrupt
-                  0x00142a                  __T4Interrupt
-                  0x001012                  __T5Interrupt
-                  0x0013ee                  __U1RXInterrupt
-                  0x001330                  __U1TXInterrupt
+                  0x00115e                  __MI2CInterrupt
+                  0x0018a4                  __T4Interrupt
+                  0x001422                  __T5Interrupt
+                  0x001868                  __U1RXInterrupt
+                  0x001808                  __U1TXInterrupt
                   0x000190                  ___divsi3
                   0x0001ae                  ___udivsi3
                   0x000132                  __data_init
                   0x000132                  __data_init_standard
                   0x000122                  __psv_init
                   0x000100                  __resetPRI
-                  0x00140e                  _e_getchar_uart1
-                  0x000b9c                  _e_i2c_ack
-                  0x000ad2                  _e_i2c_disable
-                  0x000ac6                  _e_i2c_enable
-                  0x000a44                  _e_i2c_init
-                  0x000c02                  _e_i2c_nack
-                  0x000c68                  _e_i2c_read
-                  0x000a7e                  _e_i2c_reset
-                  0x000b22                  _e_i2c_restart
-                  0x000ade                  _e_i2c_start
-                  0x000b66                  _e_i2c_stop
-                  0x000d14                  _e_i2c_write
-                  0x00121a                  _e_i2cp_disable
-                  0x001212                  _e_i2cp_enable
-                  0x00120a                  _e_i2cp_init
-                  0x001222                  _e_i2cp_read
-                  0x00126a                  _e_i2cp_write
-                  0x0012a6                  _e_init_port
-                  0x001462                  _e_init_uart1
-                  0x001406                  _e_ischar_uart1
+                  0x00161a                  _cuteFlash
+                  0x001888                  _e_getchar_uart1
+                  0x000fac                  _e_i2c_ack
+                  0x000ee2                  _e_i2c_disable
+                  0x000ed6                  _e_i2c_enable
+                  0x000e54                  _e_i2c_init
+                  0x001012                  _e_i2c_nack
+                  0x001078                  _e_i2c_read
+                  0x000e8e                  _e_i2c_reset
+                  0x000f32                  _e_i2c_restart
+                  0x000eee                  _e_i2c_start
+                  0x000f76                  _e_i2c_stop
+                  0x001124                  _e_i2c_write
+                  0x0016f2                  _e_i2cp_disable
+                  0x0016ea                  _e_i2cp_enable
+                  0x0016e2                  _e_i2cp_init
+                  0x0016fa                  _e_i2cp_read
+                  0x001742                  _e_i2cp_write
+                  0x00177e                  _e_init_port
+                  0x0018dc                  _e_init_uart1
+                  0x001880                  _e_ischar_uart1
+                  0x000e0e                  _e_led_clear
                   0x000644                  _e_po3030k_SetColorMatrix
-                  0x001074                  _e_po3030k_apply_timer_config
-                  0x000d66                  _e_po3030k_config_cam
-                  0x000fa2                  _e_po3030k_get_bytes_per_pixel
+                  0x001484                  _e_po3030k_apply_timer_config
+                  0x001176                  _e_po3030k_config_cam
+                  0x0013b2                  _e_po3030k_get_bytes_per_pixel
                   0x000484                  _e_po3030k_get_register
-                  0x000fda                  _e_po3030k_init_cam
-                  0x001112                  _e_po3030k_is_img_ready
-                  0x00105c                  _e_po3030k_launch_capture
+                  0x0013ea                  _e_po3030k_init_cam
+                  0x001522                  _e_po3030k_is_img_ready
+                  0x00146c                  _e_po3030k_launch_capture
                   0x00020e                  _e_po3030k_read_cam_registers
                   0x000530                  _e_po3030k_set_adc_offset
                   0x0006d0                  _e_po3030k_set_ae_speed
@@ -317,11 +328,14 @@ External Symbols in Program Memory (by name):
                   0x0005e4                  _e_po3030k_sync_register_array
                   0x0001dc                  _e_po3030k_write_cam_registers
                   0x0005c6                  _e_po3030k_write_gamma_coef
-                  0x001374                  _e_send_uart1_char
-                  0x00138c                  _e_uart1_sending
-                  0x000a14                  _idle_i2c
-                  0x0013a6                  _main
-                  0x001390                  _takePhoto
+                  0x00184c                  _e_send_uart1_char
+                  0x000d8e                  _e_set_body_led
+                  0x000dce                  _e_set_front_led
+                  0x000a14                  _e_set_led
+                  0x001864                  _e_uart1_sending
+                  0x000e24                  _idle_i2c
+                  0x00169a                  _main
+                  0x001682                  _takePhoto
 
 Memory Configuration
 
@@ -347,15 +361,15 @@ eedata           0x7ff000           0x001000
 
 Linker script and memory map
 
-LOAD e_init_port.o
-LOAD main.o
-LOAD e_timers.o
-LOAD e_calc.o
-LOAD e_interrupt.o
-LOAD e_registers.o
-LOAD C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\I2C\I2C.a
-LOAD C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a
-LOAD C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a
+LOAD obj\main.o
+LOAD obj\e_timers.o
+LOAD obj\e_calc.o
+LOAD obj\e_interrupt.o
+LOAD obj\e_registers.o
+LOAD C:\libraries\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a
+LOAD C:\libraries\official-epuck-lib\library\I2C\I2C.a
+LOAD C:\libraries\official-epuck-lib\library\uart\e_uart_char.a
+LOAD C:\libraries\official-epuck-lib\library\motor_led\motor_LED.a
 LOAD c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib/dsPIC30F\libp30F6014A-coff.a
                     0xf80000                  __FOSC = 0xf80000
                     0xf80002                  __FWDT = 0xf80002
@@ -407,15 +421,15 @@ usercode
 
 __FOSC            0xf80000          0x2
  *(__FOSC.sec)
- __FOSC.sec       0xf80000          0x2 e_init_port.o
+ __FOSC.sec       0xf80000          0x2 C:\libraries\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a(e_init_port.o)
 
 __FWDT            0xf80002          0x2
  *(__FWDT.sec)
- __FWDT.sec       0xf80002          0x2 e_init_port.o
+ __FWDT.sec       0xf80002          0x2 C:\libraries\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a(e_init_port.o)
 
 __FBORPOR         0xf80004          0x2
  *(__FBORPOR.sec)
- __FBORPOR.sec    0xf80004          0x2 e_init_port.o
+ __FBORPOR.sec    0xf80004          0x2 C:\libraries\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a(e_init_port.o)
 
 __FBS
  *(__FBS.sec)
@@ -484,132 +498,132 @@ userdata
  *(.debug_aranges)
 
 .ivt              0x000004         0x7c
-                  0x000004          0x4 LONG 0x1490 DEFINED (__ReservedTrap0)?<code 339> (__ReservedTrap0):<code 339> (__DefaultInterrupt)
-                  0x000006          0x4 LONG 0x1490 DEFINED (__OscillatorFail)?<code 339> (__OscillatorFail):<code 339> (__DefaultInterrupt)
-                  0x000008          0x4 LONG 0x1490 DEFINED (__AddressError)?<code 339> (__AddressError):<code 339> (__DefaultInterrupt)
-                  0x00000a          0x4 LONG 0x1490 DEFINED (__StackError)?<code 339> (__StackError):<code 339> (__DefaultInterrupt)
-                  0x00000c          0x4 LONG 0x1490 DEFINED (__MathError)?<code 339> (__MathError):<code 339> (__DefaultInterrupt)
-                  0x00000e          0x4 LONG 0x1490 DEFINED (__ReservedTrap5)?<code 339> (__ReservedTrap5):<code 339> (__DefaultInterrupt)
-                  0x000010          0x4 LONG 0x1490 DEFINED (__ReservedTrap6)?<code 339> (__ReservedTrap6):<code 339> (__DefaultInterrupt)
-                  0x000012          0x4 LONG 0x1490 DEFINED (__ReservedTrap7)?<code 339> (__ReservedTrap7):<code 339> (__DefaultInterrupt)
-                  0x000014          0x4 LONG 0x1490 DEFINED (__INT0Interrupt)?<code 339> (__INT0Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000016          0x4 LONG 0x1490 DEFINED (__IC1Interrupt)?<code 339> (__IC1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000018          0x4 LONG 0x1490 DEFINED (__OC1Interrupt)?<code 339> (__OC1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x1490 DEFINED (__T1Interrupt)?<code 339> (__T1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00001c          0x4 LONG 0x1490 DEFINED (__IC2Interrupt)?<code 339> (__IC2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00001e          0x4 LONG 0x1490 DEFINED (__OC2Interrupt)?<code 339> (__OC2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000020          0x4 LONG 0x1490 DEFINED (__T2Interrupt)?<code 339> (__T2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000022          0x4 LONG 0x1490 DEFINED (__T3Interrupt)?<code 339> (__T3Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x1490 DEFINED (__SPI1Interrupt)?<code 339> (__SPI1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000026          0x4 LONG 0x13ee DEFINED (__U1RXInterrupt)?<code 339> (__U1RXInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000028          0x4 LONG 0x1330 DEFINED (__U1TXInterrupt)?<code 339> (__U1TXInterrupt):<code 339> (__DefaultInterrupt)
-                  0x00002a          0x4 LONG 0x1490 DEFINED (__ADCInterrupt)?<code 339> (__ADCInterrupt):<code 339> (__DefaultInterrupt)
-                  0x00002c          0x4 LONG 0x1490 DEFINED (__NVMInterrupt)?<code 339> (__NVMInterrupt):<code 339> (__DefaultInterrupt)
-                  0x00002e          0x4 LONG 0x1490 DEFINED (__SI2CInterrupt)?<code 339> (__SI2CInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000030          0x4 LONG 0xd4e DEFINED (__MI2CInterrupt)?<code 339> (__MI2CInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000032          0x4 LONG 0x1490 DEFINED (__CNInterrupt)?<code 339> (__CNInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000034          0x4 LONG 0x1490 DEFINED (__INT1Interrupt)?<code 339> (__INT1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000036          0x4 LONG 0x1490 DEFINED (__IC7Interrupt)?<code 339> (__IC7Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000038          0x4 LONG 0x1490 DEFINED (__IC8Interrupt)?<code 339> (__IC8Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00003a          0x4 LONG 0x1490 DEFINED (__OC3Interrupt)?<code 339> (__OC3Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00003c          0x4 LONG 0x1490 DEFINED (__OC4Interrupt)?<code 339> (__OC4Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00003e          0x4 LONG 0x142a DEFINED (__T4Interrupt)?<code 339> (__T4Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000040          0x4 LONG 0x1012 DEFINED (__T5Interrupt)?<code 339> (__T5Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000042          0x4 LONG 0x1490 DEFINED (__INT2Interrupt)?<code 339> (__INT2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000044          0x4 LONG 0x1490 DEFINED (__U2RXInterrupt)?<code 339> (__U2RXInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000046          0x4 LONG 0x1490 DEFINED (__U2TXInterrupt)?<code 339> (__U2TXInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000048          0x4 LONG 0x1490 DEFINED (__SPI2Interrupt)?<code 339> (__SPI2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00004a          0x4 LONG 0x1490 DEFINED (__C1Interrupt)?<code 339> (__C1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00004c          0x4 LONG 0x1490 DEFINED (__IC3Interrupt)?<code 339> (__IC3Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00004e          0x4 LONG 0x1490 DEFINED (__IC4Interrupt)?<code 339> (__IC4Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000050          0x4 LONG 0x1490 DEFINED (__IC5Interrupt)?<code 339> (__IC5Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000052          0x4 LONG 0x1490 DEFINED (__IC6Interrupt)?<code 339> (__IC6Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000054          0x4 LONG 0x1490 DEFINED (__OC5Interrupt)?<code 339> (__OC5Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000056          0x4 LONG 0x1490 DEFINED (__OC6Interrupt)?<code 339> (__OC6Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000058          0x4 LONG 0x1490 DEFINED (__OC7Interrupt)?<code 339> (__OC7Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00005a          0x4 LONG 0x1490 DEFINED (__OC8Interrupt)?<code 339> (__OC8Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00005c          0x4 LONG 0x1490 DEFINED (__INT3Interrupt)?<code 339> (__INT3Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00005e          0x4 LONG 0x1490 DEFINED (__INT4Interrupt)?<code 339> (__INT4Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000060          0x4 LONG 0x1490 DEFINED (__C2Interrupt)?<code 339> (__C2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000062          0x4 LONG 0x1490 DEFINED (__PWMInterrupt)?<code 339> (__PWMInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000064          0x4 LONG 0x1490 DEFINED (__QEIInterrupt)?<code 339> (__QEIInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000066          0x4 LONG 0x1490 DEFINED (__DCIInterrupt)?<code 339> (__DCIInterrupt):<code 339> (__DefaultInterrupt)
-                  0x000068          0x4 LONG 0x1490 DEFINED (__LVDInterrupt)?<code 339> (__LVDInterrupt):<code 339> (__DefaultInterrupt)
-                  0x00006a          0x4 LONG 0x1490 DEFINED (__FLTAInterrupt)?<code 339> (__FLTAInterrupt):<code 339> (__DefaultInterrupt)
-                  0x00006c          0x4 LONG 0x1490 DEFINED (__FLTBInterrupt)?<code 339> (__FLTBInterrupt):<code 339> (__DefaultInterrupt)
-                  0x00006e          0x4 LONG 0x1490 DEFINED (__Interrupt45)?<code 339> (__Interrupt45):<code 339> (__DefaultInterrupt)
-                  0x000070          0x4 LONG 0x1490 DEFINED (__Interrupt46)?<code 339> (__Interrupt46):<code 339> (__DefaultInterrupt)
-                  0x000072          0x4 LONG 0x1490 DEFINED (__Interrupt47)?<code 339> (__Interrupt47):<code 339> (__DefaultInterrupt)
-                  0x000074          0x4 LONG 0x1490 DEFINED (__Interrupt48)?<code 339> (__Interrupt48):<code 339> (__DefaultInterrupt)
-                  0x000076          0x4 LONG 0x1490 DEFINED (__Interrupt49)?<code 339> (__Interrupt49):<code 339> (__DefaultInterrupt)
-                  0x000078          0x4 LONG 0x1490 DEFINED (__Interrupt50)?<code 339> (__Interrupt50):<code 339> (__DefaultInterrupt)
-                  0x00007a          0x4 LONG 0x1490 DEFINED (__Interrupt51)?<code 339> (__Interrupt51):<code 339> (__DefaultInterrupt)
-                  0x00007c          0x4 LONG 0x1490 DEFINED (__Interrupt52)?<code 339> (__Interrupt52):<code 339> (__DefaultInterrupt)
-                  0x00007e          0x4 LONG 0x1490 DEFINED (__Interrupt53)?<code 339> (__Interrupt53):<code 339> (__DefaultInterrupt)
+                  0x000004          0x4 LONG 0x190a DEFINED (__ReservedTrap0)?<code 339> (__ReservedTrap0):<code 339> (__DefaultInterrupt)
+                  0x000006          0x4 LONG 0x190a DEFINED (__OscillatorFail)?<code 339> (__OscillatorFail):<code 339> (__DefaultInterrupt)
+                  0x000008          0x4 LONG 0x190a DEFINED (__AddressError)?<code 339> (__AddressError):<code 339> (__DefaultInterrupt)
+                  0x00000a          0x4 LONG 0x190a DEFINED (__StackError)?<code 339> (__StackError):<code 339> (__DefaultInterrupt)
+                  0x00000c          0x4 LONG 0x190a DEFINED (__MathError)?<code 339> (__MathError):<code 339> (__DefaultInterrupt)
+                  0x00000e          0x4 LONG 0x190a DEFINED (__ReservedTrap5)?<code 339> (__ReservedTrap5):<code 339> (__DefaultInterrupt)
+                  0x000010          0x4 LONG 0x190a DEFINED (__ReservedTrap6)?<code 339> (__ReservedTrap6):<code 339> (__DefaultInterrupt)
+                  0x000012          0x4 LONG 0x190a DEFINED (__ReservedTrap7)?<code 339> (__ReservedTrap7):<code 339> (__DefaultInterrupt)
+                  0x000014          0x4 LONG 0x190a DEFINED (__INT0Interrupt)?<code 339> (__INT0Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000016          0x4 LONG 0x190a DEFINED (__IC1Interrupt)?<code 339> (__IC1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000018          0x4 LONG 0x190a DEFINED (__OC1Interrupt)?<code 339> (__OC1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x190a DEFINED (__T1Interrupt)?<code 339> (__T1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00001c          0x4 LONG 0x190a DEFINED (__IC2Interrupt)?<code 339> (__IC2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00001e          0x4 LONG 0x190a DEFINED (__OC2Interrupt)?<code 339> (__OC2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000020          0x4 LONG 0x190a DEFINED (__T2Interrupt)?<code 339> (__T2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000022          0x4 LONG 0x190a DEFINED (__T3Interrupt)?<code 339> (__T3Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x190a DEFINED (__SPI1Interrupt)?<code 339> (__SPI1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000026          0x4 LONG 0x1868 DEFINED (__U1RXInterrupt)?<code 339> (__U1RXInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000028          0x4 LONG 0x1808 DEFINED (__U1TXInterrupt)?<code 339> (__U1TXInterrupt):<code 339> (__DefaultInterrupt)
+                  0x00002a          0x4 LONG 0x190a DEFINED (__ADCInterrupt)?<code 339> (__ADCInterrupt):<code 339> (__DefaultInterrupt)
+                  0x00002c          0x4 LONG 0x190a DEFINED (__NVMInterrupt)?<code 339> (__NVMInterrupt):<code 339> (__DefaultInterrupt)
+                  0x00002e          0x4 LONG 0x190a DEFINED (__SI2CInterrupt)?<code 339> (__SI2CInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000030          0x4 LONG 0x115e DEFINED (__MI2CInterrupt)?<code 339> (__MI2CInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000032          0x4 LONG 0x190a DEFINED (__CNInterrupt)?<code 339> (__CNInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000034          0x4 LONG 0x190a DEFINED (__INT1Interrupt)?<code 339> (__INT1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000036          0x4 LONG 0x190a DEFINED (__IC7Interrupt)?<code 339> (__IC7Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000038          0x4 LONG 0x190a DEFINED (__IC8Interrupt)?<code 339> (__IC8Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00003a          0x4 LONG 0x190a DEFINED (__OC3Interrupt)?<code 339> (__OC3Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00003c          0x4 LONG 0x190a DEFINED (__OC4Interrupt)?<code 339> (__OC4Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00003e          0x4 LONG 0x18a4 DEFINED (__T4Interrupt)?<code 339> (__T4Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000040          0x4 LONG 0x1422 DEFINED (__T5Interrupt)?<code 339> (__T5Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000042          0x4 LONG 0x190a DEFINED (__INT2Interrupt)?<code 339> (__INT2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000044          0x4 LONG 0x190a DEFINED (__U2RXInterrupt)?<code 339> (__U2RXInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000046          0x4 LONG 0x190a DEFINED (__U2TXInterrupt)?<code 339> (__U2TXInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000048          0x4 LONG 0x190a DEFINED (__SPI2Interrupt)?<code 339> (__SPI2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00004a          0x4 LONG 0x190a DEFINED (__C1Interrupt)?<code 339> (__C1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00004c          0x4 LONG 0x190a DEFINED (__IC3Interrupt)?<code 339> (__IC3Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00004e          0x4 LONG 0x190a DEFINED (__IC4Interrupt)?<code 339> (__IC4Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000050          0x4 LONG 0x190a DEFINED (__IC5Interrupt)?<code 339> (__IC5Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000052          0x4 LONG 0x190a DEFINED (__IC6Interrupt)?<code 339> (__IC6Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000054          0x4 LONG 0x190a DEFINED (__OC5Interrupt)?<code 339> (__OC5Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000056          0x4 LONG 0x190a DEFINED (__OC6Interrupt)?<code 339> (__OC6Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000058          0x4 LONG 0x190a DEFINED (__OC7Interrupt)?<code 339> (__OC7Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00005a          0x4 LONG 0x190a DEFINED (__OC8Interrupt)?<code 339> (__OC8Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00005c          0x4 LONG 0x190a DEFINED (__INT3Interrupt)?<code 339> (__INT3Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00005e          0x4 LONG 0x190a DEFINED (__INT4Interrupt)?<code 339> (__INT4Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000060          0x4 LONG 0x190a DEFINED (__C2Interrupt)?<code 339> (__C2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000062          0x4 LONG 0x190a DEFINED (__PWMInterrupt)?<code 339> (__PWMInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000064          0x4 LONG 0x190a DEFINED (__QEIInterrupt)?<code 339> (__QEIInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000066          0x4 LONG 0x190a DEFINED (__DCIInterrupt)?<code 339> (__DCIInterrupt):<code 339> (__DefaultInterrupt)
+                  0x000068          0x4 LONG 0x190a DEFINED (__LVDInterrupt)?<code 339> (__LVDInterrupt):<code 339> (__DefaultInterrupt)
+                  0x00006a          0x4 LONG 0x190a DEFINED (__FLTAInterrupt)?<code 339> (__FLTAInterrupt):<code 339> (__DefaultInterrupt)
+                  0x00006c          0x4 LONG 0x190a DEFINED (__FLTBInterrupt)?<code 339> (__FLTBInterrupt):<code 339> (__DefaultInterrupt)
+                  0x00006e          0x4 LONG 0x190a DEFINED (__Interrupt45)?<code 339> (__Interrupt45):<code 339> (__DefaultInterrupt)
+                  0x000070          0x4 LONG 0x190a DEFINED (__Interrupt46)?<code 339> (__Interrupt46):<code 339> (__DefaultInterrupt)
+                  0x000072          0x4 LONG 0x190a DEFINED (__Interrupt47)?<code 339> (__Interrupt47):<code 339> (__DefaultInterrupt)
+                  0x000074          0x4 LONG 0x190a DEFINED (__Interrupt48)?<code 339> (__Interrupt48):<code 339> (__DefaultInterrupt)
+                  0x000076          0x4 LONG 0x190a DEFINED (__Interrupt49)?<code 339> (__Interrupt49):<code 339> (__DefaultInterrupt)
+                  0x000078          0x4 LONG 0x190a DEFINED (__Interrupt50)?<code 339> (__Interrupt50):<code 339> (__DefaultInterrupt)
+                  0x00007a          0x4 LONG 0x190a DEFINED (__Interrupt51)?<code 339> (__Interrupt51):<code 339> (__DefaultInterrupt)
+                  0x00007c          0x4 LONG 0x190a DEFINED (__Interrupt52)?<code 339> (__Interrupt52):<code 339> (__DefaultInterrupt)
+                  0x00007e          0x4 LONG 0x190a DEFINED (__Interrupt53)?<code 339> (__Interrupt53):<code 339> (__DefaultInterrupt)
 
 .aivt             0x000084         0x7c
-                  0x000084          0x4 LONG 0x1490 DEFINED (__AltReservedTrap0)?<code 339> (__AltReservedTrap0):DEFINED (__ReservedTrap0)?<code 339> (__ReservedTrap0):<code 339> (__DefaultInterrupt)
-                  0x000086          0x4 LONG 0x1490 DEFINED (__AltOscillatorFail)?<code 339> (__AltOscillatorFail):DEFINED (__OscillatorFail)?<code 339> (__OscillatorFail):<code 339> (__DefaultInterrupt)
-                  0x000088          0x4 LONG 0x1490 DEFINED (__AltAddressError)?<code 339> (__AltAddressError):DEFINED (__AddressError)?<code 339> (__AddressError):<code 339> (__DefaultInterrupt)
-                  0x00008a          0x4 LONG 0x1490 DEFINED (__AltStackError)?<code 339> (__AltStackError):DEFINED (__StackError)?<code 339> (__StackError):<code 339> (__DefaultInterrupt)
-                  0x00008c          0x4 LONG 0x1490 DEFINED (__AltMathError)?<code 339> (__AltMathError):DEFINED (__MathError)?<code 339> (__MathError):<code 339> (__DefaultInterrupt)
-                  0x00008e          0x4 LONG 0x1490 DEFINED (__AltReservedTrap5)?<code 339> (__AltReservedTrap5):DEFINED (__ReservedTrap5)?<code 339> (__ReservedTrap5):<code 339> (__DefaultInterrupt)
-                  0x000090          0x4 LONG 0x1490 DEFINED (__AltReservedTrap6)?<code 339> (__AltReservedTrap6):DEFINED (__ReservedTrap6)?<code 339> (__ReservedTrap6):<code 339> (__DefaultInterrupt)
-                  0x000092          0x4 LONG 0x1490 DEFINED (__AltReservedTrap7)?<code 339> (__AltReservedTrap7):DEFINED (__ReservedTrap7)?<code 339> (__ReservedTrap7):<code 339> (__DefaultInterrupt)
-                  0x000094          0x4 LONG 0x1490 DEFINED (__AltINT0Interrupt)?<code 339> (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?<code 339> (__INT0Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000096          0x4 LONG 0x1490 DEFINED (__AltIC1Interrupt)?<code 339> (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?<code 339> (__IC1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x000098          0x4 LONG 0x1490 DEFINED (__AltOC1Interrupt)?<code 339> (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?<code 339> (__OC1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00009a          0x4 LONG 0x1490 DEFINED (__AltT1Interrupt)?<code 339> (__AltT1Interrupt):DEFINED (__T1Interrupt)?<code 339> (__T1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00009c          0x4 LONG 0x1490 DEFINED (__AltIC2Interrupt)?<code 339> (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?<code 339> (__IC2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x00009e          0x4 LONG 0x1490 DEFINED (__AltOC2Interrupt)?<code 339> (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?<code 339> (__OC2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000a0          0x4 LONG 0x1490 DEFINED (__AltT2Interrupt)?<code 339> (__AltT2Interrupt):DEFINED (__T2Interrupt)?<code 339> (__T2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000a2          0x4 LONG 0x1490 DEFINED (__AltT3Interrupt)?<code 339> (__AltT3Interrupt):DEFINED (__T3Interrupt)?<code 339> (__T3Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000a4          0x4 LONG 0x1490 DEFINED (__AltSPI1Interrupt)?<code 339> (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?<code 339> (__SPI1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000a6          0x4 LONG 0x13ee DEFINED (__AltU1RXInterrupt)?<code 339> (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?<code 339> (__U1RXInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000a8          0x4 LONG 0x1330 DEFINED (__AltU1TXInterrupt)?<code 339> (__AltU1TXInterrupt):DEFINED (__U1TXInterrupt)?<code 339> (__U1TXInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000aa          0x4 LONG 0x1490 DEFINED (__AltADCInterrupt)?<code 339> (__AltADCInterrupt):DEFINED (__ADCInterrupt)?<code 339> (__ADCInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000ac          0x4 LONG 0x1490 DEFINED (__AltNVMInterrupt)?<code 339> (__AltNVMInterrupt):DEFINED (__NVMInterrupt)?<code 339> (__NVMInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000ae          0x4 LONG 0x1490 DEFINED (__AltSI2CInterrupt)?<code 339> (__AltSI2CInterrupt):DEFINED (__SI2CInterrupt)?<code 339> (__SI2CInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000b0          0x4 LONG 0xd4e DEFINED (__AltMI2CInterrupt)?<code 339> (__AltMI2CInterrupt):DEFINED (__MI2CInterrupt)?<code 339> (__MI2CInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000b2          0x4 LONG 0x1490 DEFINED (__AltCNInterrupt)?<code 339> (__AltCNInterrupt):DEFINED (__CNInterrupt)?<code 339> (__CNInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000b4          0x4 LONG 0x1490 DEFINED (__AltINT1Interrupt)?<code 339> (__AltINT1Interrupt):DEFINED (__INT1Interrupt)?<code 339> (__INT1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000b6          0x4 LONG 0x1490 DEFINED (__AltIC7Interrupt)?<code 339> (__AltIC7Interrupt):DEFINED (__IC7Interrupt)?<code 339> (__IC7Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000b8          0x4 LONG 0x1490 DEFINED (__AltIC8Interrupt)?<code 339> (__AltIC8Interrupt):DEFINED (__IC8Interrupt)?<code 339> (__IC8Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000ba          0x4 LONG 0x1490 DEFINED (__AltOC3Interrupt)?<code 339> (__AltOC3Interrupt):DEFINED (__OC3Interrupt)?<code 339> (__OC3Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000bc          0x4 LONG 0x1490 DEFINED (__AltOC4Interrupt)?<code 339> (__AltOC4Interrupt):DEFINED (__OC4Interrupt)?<code 339> (__OC4Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000be          0x4 LONG 0x142a DEFINED (__AltT4Interrupt)?<code 339> (__AltT4Interrupt):DEFINED (__T4Interrupt)?<code 339> (__T4Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000c0          0x4 LONG 0x1012 DEFINED (__AltT5Interrupt)?<code 339> (__AltT5Interrupt):DEFINED (__T5Interrupt)?<code 339> (__T5Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000c2          0x4 LONG 0x1490 DEFINED (__AltINT2Interrupt)?<code 339> (__AltINT2Interrupt):DEFINED (__INT2Interrupt)?<code 339> (__INT2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000c4          0x4 LONG 0x1490 DEFINED (__AltU2RXInterrupt)?<code 339> (__AltU2RXInterrupt):DEFINED (__U2RXInterrupt)?<code 339> (__U2RXInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000c6          0x4 LONG 0x1490 DEFINED (__AltU2TXInterrupt)?<code 339> (__AltU2TXInterrupt):DEFINED (__U2TXInterrupt)?<code 339> (__U2TXInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000c8          0x4 LONG 0x1490 DEFINED (__AltSPI2Interrupt)?<code 339> (__AltSPI2Interrupt):DEFINED (__SPI2Interrupt)?<code 339> (__SPI2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000ca          0x4 LONG 0x1490 DEFINED (__AltC1Interrupt)?<code 339> (__AltC1Interrupt):DEFINED (__C1Interrupt)?<code 339> (__C1Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000cc          0x4 LONG 0x1490 DEFINED (__AltIC3Interrupt)?<code 339> (__AltIC3Interrupt):DEFINED (__IC3Interrupt)?<code 339> (__IC3Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000ce          0x4 LONG 0x1490 DEFINED (__AltIC4Interrupt)?<code 339> (__AltIC4Interrupt):DEFINED (__IC4Interrupt)?<code 339> (__IC4Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000d0          0x4 LONG 0x1490 DEFINED (__AltIC5Interrupt)?<code 339> (__AltIC5Interrupt):DEFINED (__IC5Interrupt)?<code 339> (__IC5Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000d2          0x4 LONG 0x1490 DEFINED (__AltIC6Interrupt)?<code 339> (__AltIC6Interrupt):DEFINED (__IC6Interrupt)?<code 339> (__IC6Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000d4          0x4 LONG 0x1490 DEFINED (__AltOC5Interrupt)?<code 339> (__AltOC5Interrupt):DEFINED (__OC5Interrupt)?<code 339> (__OC5Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000d6          0x4 LONG 0x1490 DEFINED (__AltOC6Interrupt)?<code 339> (__AltOC6Interrupt):DEFINED (__OC6Interrupt)?<code 339> (__OC6Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000d8          0x4 LONG 0x1490 DEFINED (__AltOC7Interrupt)?<code 339> (__AltOC7Interrupt):DEFINED (__OC7Interrupt)?<code 339> (__OC7Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000da          0x4 LONG 0x1490 DEFINED (__AltOC8Interrupt)?<code 339> (__AltOC8Interrupt):DEFINED (__OC8Interrupt)?<code 339> (__OC8Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000dc          0x4 LONG 0x1490 DEFINED (__AltINT3Interrupt)?<code 339> (__AltINT3Interrupt):DEFINED (__INT3Interrupt)?<code 339> (__INT3Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000de          0x4 LONG 0x1490 DEFINED (__AltINT4Interrupt)?<code 339> (__AltINT4Interrupt):DEFINED (__INT4Interrupt)?<code 339> (__INT4Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000e0          0x4 LONG 0x1490 DEFINED (__AltC2Interrupt)?<code 339> (__AltC2Interrupt):DEFINED (__C2Interrupt)?<code 339> (__C2Interrupt):<code 339> (__DefaultInterrupt)
-                  0x0000e2          0x4 LONG 0x1490 DEFINED (__AltPWMInterrupt)?<code 339> (__AltPWMInterrupt):DEFINED (__PWMInterrupt)?<code 339> (__PWMInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000e4          0x4 LONG 0x1490 DEFINED (__AltQEIInterrupt)?<code 339> (__AltQEIInterrupt):DEFINED (__QEIInterrupt)?<code 339> (__QEIInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000e6          0x4 LONG 0x1490 DEFINED (__AltDCIInterrupt)?<code 339> (__AltDCIInterrupt):DEFINED (__DCIInterrupt)?<code 339> (__DCIInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000e8          0x4 LONG 0x1490 DEFINED (__AltLVDInterrupt)?<code 339> (__AltLVDInterrupt):DEFINED (__LVDInterrupt)?<code 339> (__LVDInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000ea          0x4 LONG 0x1490 DEFINED (__AltFLTAInterrupt)?<code 339> (__AltFLTAInterrupt):DEFINED (__FLTAInterrupt)?<code 339> (__FLTAInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000ec          0x4 LONG 0x1490 DEFINED (__AltFLTBInterrupt)?<code 339> (__AltFLTBInterrupt):DEFINED (__FLTBInterrupt)?<code 339> (__FLTBInterrupt):<code 339> (__DefaultInterrupt)
-                  0x0000ee          0x4 LONG 0x1490 DEFINED (__AltInterrupt45)?<code 339> (__AltInterrupt45):DEFINED (__Interrupt45)?<code 339> (__Interrupt45):<code 339> (__DefaultInterrupt)
-                  0x0000f0          0x4 LONG 0x1490 DEFINED (__AltInterrupt46)?<code 339> (__AltInterrupt46):DEFINED (__Interrupt46)?<code 339> (__Interrupt46):<code 339> (__DefaultInterrupt)
-                  0x0000f2          0x4 LONG 0x1490 DEFINED (__AltInterrupt47)?<code 339> (__AltInterrupt47):DEFINED (__Interrupt47)?<code 339> (__Interrupt47):<code 339> (__DefaultInterrupt)
-                  0x0000f4          0x4 LONG 0x1490 DEFINED (__AltInterrupt48)?<code 339> (__AltInterrupt48):DEFINED (__Interrupt48)?<code 339> (__Interrupt48):<code 339> (__DefaultInterrupt)
-                  0x0000f6          0x4 LONG 0x1490 DEFINED (__AltInterrupt49)?<code 339> (__AltInterrupt49):DEFINED (__Interrupt49)?<code 339> (__Interrupt49):<code 339> (__DefaultInterrupt)
-                  0x0000f8          0x4 LONG 0x1490 DEFINED (__AltInterrupt50)?<code 339> (__AltInterrupt50):DEFINED (__Interrupt50)?<code 339> (__Interrupt50):<code 339> (__DefaultInterrupt)
-                  0x0000fa          0x4 LONG 0x1490 DEFINED (__AltInterrupt51)?<code 339> (__AltInterrupt51):DEFINED (__Interrupt51)?<code 339> (__Interrupt51):<code 339> (__DefaultInterrupt)
-                  0x0000fc          0x4 LONG 0x1490 DEFINED (__AltInterrupt52)?<code 339> (__AltInterrupt52):DEFINED (__Interrupt52)?<code 339> (__Interrupt52):<code 339> (__DefaultInterrupt)
-                  0x0000fe          0x4 LONG 0x1490 DEFINED (__AltInterrupt53)?<code 339> (__AltInterrupt53):DEFINED (__Interrupt53)?<code 339> (__Interrupt53):<code 339> (__DefaultInterrupt)
+                  0x000084          0x4 LONG 0x190a DEFINED (__AltReservedTrap0)?<code 339> (__AltReservedTrap0):DEFINED (__ReservedTrap0)?<code 339> (__ReservedTrap0):<code 339> (__DefaultInterrupt)
+                  0x000086          0x4 LONG 0x190a DEFINED (__AltOscillatorFail)?<code 339> (__AltOscillatorFail):DEFINED (__OscillatorFail)?<code 339> (__OscillatorFail):<code 339> (__DefaultInterrupt)
+                  0x000088          0x4 LONG 0x190a DEFINED (__AltAddressError)?<code 339> (__AltAddressError):DEFINED (__AddressError)?<code 339> (__AddressError):<code 339> (__DefaultInterrupt)
+                  0x00008a          0x4 LONG 0x190a DEFINED (__AltStackError)?<code 339> (__AltStackError):DEFINED (__StackError)?<code 339> (__StackError):<code 339> (__DefaultInterrupt)
+                  0x00008c          0x4 LONG 0x190a DEFINED (__AltMathError)?<code 339> (__AltMathError):DEFINED (__MathError)?<code 339> (__MathError):<code 339> (__DefaultInterrupt)
+                  0x00008e          0x4 LONG 0x190a DEFINED (__AltReservedTrap5)?<code 339> (__AltReservedTrap5):DEFINED (__ReservedTrap5)?<code 339> (__ReservedTrap5):<code 339> (__DefaultInterrupt)
+                  0x000090          0x4 LONG 0x190a DEFINED (__AltReservedTrap6)?<code 339> (__AltReservedTrap6):DEFINED (__ReservedTrap6)?<code 339> (__ReservedTrap6):<code 339> (__DefaultInterrupt)
+                  0x000092          0x4 LONG 0x190a DEFINED (__AltReservedTrap7)?<code 339> (__AltReservedTrap7):DEFINED (__ReservedTrap7)?<code 339> (__ReservedTrap7):<code 339> (__DefaultInterrupt)
+                  0x000094          0x4 LONG 0x190a DEFINED (__AltINT0Interrupt)?<code 339> (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?<code 339> (__INT0Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000096          0x4 LONG 0x190a DEFINED (__AltIC1Interrupt)?<code 339> (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?<code 339> (__IC1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x000098          0x4 LONG 0x190a DEFINED (__AltOC1Interrupt)?<code 339> (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?<code 339> (__OC1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00009a          0x4 LONG 0x190a DEFINED (__AltT1Interrupt)?<code 339> (__AltT1Interrupt):DEFINED (__T1Interrupt)?<code 339> (__T1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00009c          0x4 LONG 0x190a DEFINED (__AltIC2Interrupt)?<code 339> (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?<code 339> (__IC2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x00009e          0x4 LONG 0x190a DEFINED (__AltOC2Interrupt)?<code 339> (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?<code 339> (__OC2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000a0          0x4 LONG 0x190a DEFINED (__AltT2Interrupt)?<code 339> (__AltT2Interrupt):DEFINED (__T2Interrupt)?<code 339> (__T2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000a2          0x4 LONG 0x190a DEFINED (__AltT3Interrupt)?<code 339> (__AltT3Interrupt):DEFINED (__T3Interrupt)?<code 339> (__T3Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000a4          0x4 LONG 0x190a DEFINED (__AltSPI1Interrupt)?<code 339> (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?<code 339> (__SPI1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000a6          0x4 LONG 0x1868 DEFINED (__AltU1RXInterrupt)?<code 339> (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?<code 339> (__U1RXInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000a8          0x4 LONG 0x1808 DEFINED (__AltU1TXInterrupt)?<code 339> (__AltU1TXInterrupt):DEFINED (__U1TXInterrupt)?<code 339> (__U1TXInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000aa          0x4 LONG 0x190a DEFINED (__AltADCInterrupt)?<code 339> (__AltADCInterrupt):DEFINED (__ADCInterrupt)?<code 339> (__ADCInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000ac          0x4 LONG 0x190a DEFINED (__AltNVMInterrupt)?<code 339> (__AltNVMInterrupt):DEFINED (__NVMInterrupt)?<code 339> (__NVMInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000ae          0x4 LONG 0x190a DEFINED (__AltSI2CInterrupt)?<code 339> (__AltSI2CInterrupt):DEFINED (__SI2CInterrupt)?<code 339> (__SI2CInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000b0          0x4 LONG 0x115e DEFINED (__AltMI2CInterrupt)?<code 339> (__AltMI2CInterrupt):DEFINED (__MI2CInterrupt)?<code 339> (__MI2CInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000b2          0x4 LONG 0x190a DEFINED (__AltCNInterrupt)?<code 339> (__AltCNInterrupt):DEFINED (__CNInterrupt)?<code 339> (__CNInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000b4          0x4 LONG 0x190a DEFINED (__AltINT1Interrupt)?<code 339> (__AltINT1Interrupt):DEFINED (__INT1Interrupt)?<code 339> (__INT1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000b6          0x4 LONG 0x190a DEFINED (__AltIC7Interrupt)?<code 339> (__AltIC7Interrupt):DEFINED (__IC7Interrupt)?<code 339> (__IC7Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000b8          0x4 LONG 0x190a DEFINED (__AltIC8Interrupt)?<code 339> (__AltIC8Interrupt):DEFINED (__IC8Interrupt)?<code 339> (__IC8Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000ba          0x4 LONG 0x190a DEFINED (__AltOC3Interrupt)?<code 339> (__AltOC3Interrupt):DEFINED (__OC3Interrupt)?<code 339> (__OC3Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000bc          0x4 LONG 0x190a DEFINED (__AltOC4Interrupt)?<code 339> (__AltOC4Interrupt):DEFINED (__OC4Interrupt)?<code 339> (__OC4Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000be          0x4 LONG 0x18a4 DEFINED (__AltT4Interrupt)?<code 339> (__AltT4Interrupt):DEFINED (__T4Interrupt)?<code 339> (__T4Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000c0          0x4 LONG 0x1422 DEFINED (__AltT5Interrupt)?<code 339> (__AltT5Interrupt):DEFINED (__T5Interrupt)?<code 339> (__T5Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000c2          0x4 LONG 0x190a DEFINED (__AltINT2Interrupt)?<code 339> (__AltINT2Interrupt):DEFINED (__INT2Interrupt)?<code 339> (__INT2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000c4          0x4 LONG 0x190a DEFINED (__AltU2RXInterrupt)?<code 339> (__AltU2RXInterrupt):DEFINED (__U2RXInterrupt)?<code 339> (__U2RXInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000c6          0x4 LONG 0x190a DEFINED (__AltU2TXInterrupt)?<code 339> (__AltU2TXInterrupt):DEFINED (__U2TXInterrupt)?<code 339> (__U2TXInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000c8          0x4 LONG 0x190a DEFINED (__AltSPI2Interrupt)?<code 339> (__AltSPI2Interrupt):DEFINED (__SPI2Interrupt)?<code 339> (__SPI2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000ca          0x4 LONG 0x190a DEFINED (__AltC1Interrupt)?<code 339> (__AltC1Interrupt):DEFINED (__C1Interrupt)?<code 339> (__C1Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000cc          0x4 LONG 0x190a DEFINED (__AltIC3Interrupt)?<code 339> (__AltIC3Interrupt):DEFINED (__IC3Interrupt)?<code 339> (__IC3Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000ce          0x4 LONG 0x190a DEFINED (__AltIC4Interrupt)?<code 339> (__AltIC4Interrupt):DEFINED (__IC4Interrupt)?<code 339> (__IC4Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000d0          0x4 LONG 0x190a DEFINED (__AltIC5Interrupt)?<code 339> (__AltIC5Interrupt):DEFINED (__IC5Interrupt)?<code 339> (__IC5Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000d2          0x4 LONG 0x190a DEFINED (__AltIC6Interrupt)?<code 339> (__AltIC6Interrupt):DEFINED (__IC6Interrupt)?<code 339> (__IC6Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000d4          0x4 LONG 0x190a DEFINED (__AltOC5Interrupt)?<code 339> (__AltOC5Interrupt):DEFINED (__OC5Interrupt)?<code 339> (__OC5Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000d6          0x4 LONG 0x190a DEFINED (__AltOC6Interrupt)?<code 339> (__AltOC6Interrupt):DEFINED (__OC6Interrupt)?<code 339> (__OC6Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000d8          0x4 LONG 0x190a DEFINED (__AltOC7Interrupt)?<code 339> (__AltOC7Interrupt):DEFINED (__OC7Interrupt)?<code 339> (__OC7Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000da          0x4 LONG 0x190a DEFINED (__AltOC8Interrupt)?<code 339> (__AltOC8Interrupt):DEFINED (__OC8Interrupt)?<code 339> (__OC8Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000dc          0x4 LONG 0x190a DEFINED (__AltINT3Interrupt)?<code 339> (__AltINT3Interrupt):DEFINED (__INT3Interrupt)?<code 339> (__INT3Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000de          0x4 LONG 0x190a DEFINED (__AltINT4Interrupt)?<code 339> (__AltINT4Interrupt):DEFINED (__INT4Interrupt)?<code 339> (__INT4Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000e0          0x4 LONG 0x190a DEFINED (__AltC2Interrupt)?<code 339> (__AltC2Interrupt):DEFINED (__C2Interrupt)?<code 339> (__C2Interrupt):<code 339> (__DefaultInterrupt)
+                  0x0000e2          0x4 LONG 0x190a DEFINED (__AltPWMInterrupt)?<code 339> (__AltPWMInterrupt):DEFINED (__PWMInterrupt)?<code 339> (__PWMInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000e4          0x4 LONG 0x190a DEFINED (__AltQEIInterrupt)?<code 339> (__AltQEIInterrupt):DEFINED (__QEIInterrupt)?<code 339> (__QEIInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000e6          0x4 LONG 0x190a DEFINED (__AltDCIInterrupt)?<code 339> (__AltDCIInterrupt):DEFINED (__DCIInterrupt)?<code 339> (__DCIInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000e8          0x4 LONG 0x190a DEFINED (__AltLVDInterrupt)?<code 339> (__AltLVDInterrupt):DEFINED (__LVDInterrupt)?<code 339> (__LVDInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000ea          0x4 LONG 0x190a DEFINED (__AltFLTAInterrupt)?<code 339> (__AltFLTAInterrupt):DEFINED (__FLTAInterrupt)?<code 339> (__FLTAInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000ec          0x4 LONG 0x190a DEFINED (__AltFLTBInterrupt)?<code 339> (__AltFLTBInterrupt):DEFINED (__FLTBInterrupt)?<code 339> (__FLTBInterrupt):<code 339> (__DefaultInterrupt)
+                  0x0000ee          0x4 LONG 0x190a DEFINED (__AltInterrupt45)?<code 339> (__AltInterrupt45):DEFINED (__Interrupt45)?<code 339> (__Interrupt45):<code 339> (__DefaultInterrupt)
+                  0x0000f0          0x4 LONG 0x190a DEFINED (__AltInterrupt46)?<code 339> (__AltInterrupt46):DEFINED (__Interrupt46)?<code 339> (__Interrupt46):<code 339> (__DefaultInterrupt)
+                  0x0000f2          0x4 LONG 0x190a DEFINED (__AltInterrupt47)?<code 339> (__AltInterrupt47):DEFINED (__Interrupt47)?<code 339> (__Interrupt47):<code 339> (__DefaultInterrupt)
+                  0x0000f4          0x4 LONG 0x190a DEFINED (__AltInterrupt48)?<code 339> (__AltInterrupt48):DEFINED (__Interrupt48)?<code 339> (__Interrupt48):<code 339> (__DefaultInterrupt)
+                  0x0000f6          0x4 LONG 0x190a DEFINED (__AltInterrupt49)?<code 339> (__AltInterrupt49):DEFINED (__Interrupt49)?<code 339> (__Interrupt49):<code 339> (__DefaultInterrupt)
+                  0x0000f8          0x4 LONG 0x190a DEFINED (__AltInterrupt50)?<code 339> (__AltInterrupt50):DEFINED (__Interrupt50)?<code 339> (__Interrupt50):<code 339> (__DefaultInterrupt)
+                  0x0000fa          0x4 LONG 0x190a DEFINED (__AltInterrupt51)?<code 339> (__AltInterrupt51):DEFINED (__Interrupt51)?<code 339> (__Interrupt51):<code 339> (__DefaultInterrupt)
+                  0x0000fc          0x4 LONG 0x190a DEFINED (__AltInterrupt52)?<code 339> (__AltInterrupt52):DEFINED (__Interrupt52)?<code 339> (__Interrupt52):<code 339> (__DefaultInterrupt)
+                  0x0000fe          0x4 LONG 0x190a DEFINED (__AltInterrupt53)?<code 339> (__AltInterrupt53):DEFINED (__Interrupt53)?<code 339> (__Interrupt53):<code 339> (__DefaultInterrupt)
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1878,30 +1892,28 @@ LOAD default_isr
 LOAD heap
 
 __c30_signature
-                  0x000000         0x36
+                  0x000000         0x30
  __c30_signature
-                  0x000000          0x6 e_init_port.o
+                  0x000000          0x6 obj\main.o
  __c30_signature
-                  0x000006          0x6 main.o
+                  0x000006          0x6 obj\e_timers.o
  __c30_signature
-                  0x00000c          0x6 e_timers.o
+                  0x00000c          0x6 obj\e_calc.o
  __c30_signature
-                  0x000012          0x6 e_calc.o
+                  0x000012          0x6 obj\e_registers.o
  __c30_signature
-                  0x000018          0x6 e_registers.o
+                  0x000018          0x6 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o)
  __c30_signature
-                  0x00001e          0x6 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o)
+                  0x00001e          0x6 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libpic30-coff.a(data_init_standard.o)
  __c30_signature
-                  0x000024          0x6 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libpic30-coff.a(data_init_standard.o)
+                  0x000024          0x6 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libm-coff.a(divsi3.o)
  __c30_signature
-                  0x00002a          0x6 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libm-coff.a(divsi3.o)
- __c30_signature
-                  0x000030          0x6 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libm-coff.a(udivsi3.o)
+                  0x00002a          0x6 c:/program files/microchip/mplabc30/v3.25/bin/bin/../../lib\libm-coff.a(udivsi3.o)
 
 .nbss               0x0800        0xdd4
- .nbss              0x0800        0xc80 main.o
+ .nbss              0x0800        0xc80 obj\main.o
                     0x0800                  buffer
- .nbss              0x1480        0x154 e_timers.o
+ .nbss              0x1480        0x154 obj\e_timers.o
                     0x1482                  _po3030k_buffer
                     0x1484                  _po3030k_img_ready
                     0x1486                  _po3030k_current_row
@@ -1909,37 +1921,37 @@ __c30_signature
                     0x148a                  _po3030k_line_conf
 
 .ndata              0x15d4         0xd8
- .ndata             0x15d4         0xd8 e_registers.o
+ .ndata             0x15d4         0xd8 obj\e_registers.o
 
 .data               0x16ac         0x44
- .data              0x16ac         0x44 C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_rx_char.o)
+ .data              0x16ac         0x44 C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_rx_char.o)
                     0x16ac                  U1RXBuf
                     0x16ec                  U1RXRcvCnt
                     0x16ee                  U1RXReadCnt
 
 .nbss               0x16f0          0x8
- .nbss              0x16f0          0x8 C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\I2C\I2C.a(e_I2C_master_module.o)
+ .nbss              0x16f0          0x8 C:\libraries\official-epuck-lib\library\I2C\I2C.a(e_I2C_master_module.o)
                     0x16f0                  e_i2c_mode
                     0x16f2                  e_interrupts
 
 .data               0x16f8          0x6
- .data              0x16f8          0x6 C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_tx_char.o)
+ .data              0x16f8          0x6 C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_tx_char.o)
                     0x16f8                  U1TXPtr
                     0x16fa                  U1TXLength
                     0x16fc                  U1TXOk
 
 .ndata              0x16fe          0x2
- .ndata             0x16fe          0x2 main.o
+ .ndata             0x16fe          0x2 obj\main.o
                     0x16fe                  buffsize
 
 .heap               0x1700        0x200
  .heap              0x1700        0x200 heap
 
 .const              0x81ce          0xe load address 0x0001ce  
- .const             0x81ce          0xe main.o
+ .const             0x81ce          0xe obj\main.o
 
-.text             0x0001dc        0xf3e
- .text            0x0001dc        0x838 e_registers.o
+.text             0x0001dc       0x134e
+ .text            0x0001dc        0x838 obj\e_registers.o
                   0x0001dc                  e_po3030k_write_cam_registers
                   0x00020e                  e_po3030k_read_cam_registers
                   0x000244                  e_po3030k_set_color_mode
@@ -1977,58 +1989,64 @@ __c30_signature
                   0x000840                  e_po3030k_set_flicker_mode
                   0x00085e                  e_po3030k_set_flicker_detection
                   0x000954                  e_po3030k_set_flicker_man_set
- .text            0x000a14        0x352 C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\I2C\I2C.a(e_I2C_master_module.o)
-                  0x000a14                  idle_i2c
-                  0x000a44                  e_i2c_init
-                  0x000a7e                  e_i2c_reset
-                  0x000ac6                  e_i2c_enable
-                  0x000ad2                  e_i2c_disable
-                  0x000ade                  e_i2c_start
-                  0x000b22                  e_i2c_restart
-                  0x000b66                  e_i2c_stop
-                  0x000b9c                  e_i2c_ack
-                  0x000c02                  e_i2c_nack
-                  0x000c68                  e_i2c_read
-                  0x000d14                  e_i2c_write
-                  0x000d4e                  _MI2CInterrupt
- .text            0x000d66        0x2ac e_calc.o
-                  0x000d66                  e_po3030k_config_cam
-                  0x000fa2                  e_po3030k_get_bytes_per_pixel
-                  0x000fda                  e_po3030k_init_cam
- .text            0x001012        0x108 e_timers.o
-                  0x001012                  _T5Interrupt
-                  0x00105c                  e_po3030k_launch_capture
-                  0x001074                  e_po3030k_apply_timer_config
-                  0x001112                  e_po3030k_is_img_ready
+ .text            0x000a14        0x410 C:\libraries\official-epuck-lib\library\motor_led\motor_LED.a(e_led.o)
+                  0x000a14                  e_set_led
+                  0x000d8e                  e_set_body_led
+                  0x000dce                  e_set_front_led
+                  0x000e0e                  e_led_clear
+ .text            0x000e24        0x352 C:\libraries\official-epuck-lib\library\I2C\I2C.a(e_I2C_master_module.o)
+                  0x000e24                  idle_i2c
+                  0x000e54                  e_i2c_init
+                  0x000e8e                  e_i2c_reset
+                  0x000ed6                  e_i2c_enable
+                  0x000ee2                  e_i2c_disable
+                  0x000eee                  e_i2c_start
+                  0x000f32                  e_i2c_restart
+                  0x000f76                  e_i2c_stop
+                  0x000fac                  e_i2c_ack
+                  0x001012                  e_i2c_nack
+                  0x001078                  e_i2c_read
+                  0x001124                  e_i2c_write
+                  0x00115e                  _MI2CInterrupt
+ .text            0x001176        0x2ac obj\e_calc.o
+                  0x001176                  e_po3030k_config_cam
+                  0x0013b2                  e_po3030k_get_bytes_per_pixel
+                  0x0013ea                  e_po3030k_init_cam
+ .text            0x001422        0x108 obj\e_timers.o
+                  0x001422                  _T5Interrupt
+                  0x00146c                  e_po3030k_launch_capture
+                  0x001484                  e_po3030k_apply_timer_config
+                  0x001522                  e_po3030k_is_img_ready
 
-.dinit            0x00111a         0xf0
- .dinit           0x00111a         0xf0 data_init
+.dinit            0x00152a         0xf0
+ .dinit           0x00152a         0xf0 data_init
 
-.text             0x00120a        0x286
- .text            0x00120a         0x9c C:\Documents and Settings\Jenny\My Documents\firefly\Photography\epuck-side\official-epuck-lib\library\I2C\I2C.a(e_I2C_protocol.o)
-                  0x00120a                  e_i2cp_init
-                  0x001212                  e_i2cp_enable
-                  0x00121a                  e_i2cp_disable
-                  0x001222                  e_i2cp_read
-                  0x00126a                  e_i2cp_write
- .text            0x0012a6         0x8a e_init_port.o
-                  0x0012a6                  e_init_port
- .text            0x001330         0x60 C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_tx_char.o)
-                  0x001330                  _U1TXInterrupt
-                  0x001374                  e_send_uart1_char
-                  0x00138c                  e_uart1_sending
- .text            0x001390         0x5e main.o
-                  0x001390                  takePhoto
-                  0x0013a6                  main
- .text            0x0013ee         0x3c C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_rx_char.o)
-                  0x0013ee                  _U1RXInterrupt
-                  0x001406                  e_ischar_uart1
-                  0x00140e                  e_getchar_uart1
- .text            0x00142a         0x38 e_interrupt.o
-                  0x00142a                  _T4Interrupt
- .text            0x001462         0x2e C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library\uart\e_uart_char.a(e_init_uart1.o)
-                  0x001462                  e_init_uart1
+.text             0x00161a        0x2f0
+ .text            0x00161a         0xc8 obj\main.o
+                  0x00161a                  cuteFlash
+                  0x001682                  takePhoto
+                  0x00169a                  main
+ .text            0x0016e2         0x9c C:\libraries\official-epuck-lib\library\I2C\I2C.a(e_I2C_protocol.o)
+                  0x0016e2                  e_i2cp_init
+                  0x0016ea                  e_i2cp_enable
+                  0x0016f2                  e_i2cp_disable
+                  0x0016fa                  e_i2cp_read
+                  0x001742                  e_i2cp_write
+ .text            0x00177e         0x8a C:\libraries\official-epuck-lib\library\camera\fast_2_timer\cam_fast.a(e_init_port.o)
+                  0x00177e                  e_init_port
+ .text            0x001808         0x60 C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_tx_char.o)
+                  0x001808                  _U1TXInterrupt
+                  0x00184c                  e_send_uart1_char
+                  0x001864                  e_uart1_sending
+ .text            0x001868         0x3c C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_uart1_rx_char.o)
+                  0x001868                  _U1RXInterrupt
+                  0x001880                  e_ischar_uart1
+                  0x001888                  e_getchar_uart1
+ .text            0x0018a4         0x38 obj\e_interrupt.o
+                  0x0018a4                  _T4Interrupt
+ .text            0x0018dc         0x2e C:\libraries\official-epuck-lib\library\uart\e_uart_char.a(e_init_uart1.o)
+                  0x0018dc                  e_init_uart1
 
-.isr              0x001490          0x2
- .isr             0x001490          0x2 default_isr
-                  0x001490                  _DefaultInterrupt
+.isr              0x00190a          0x2
+ .isr             0x00190a          0x2 default_isr
+                  0x00190a                  _DefaultInterrupt

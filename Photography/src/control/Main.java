@@ -83,6 +83,7 @@ public class Main {
 			System.err.println("didn't like checking if the input stream reader was ready");
 			e.printStackTrace();
 		}
+		System.out.println("\n");
 		return;
 	}
 	
@@ -128,11 +129,11 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Main tmp = new Main();
-		for(int i=0; i<1; i++)
+		tmp.readPacket2();
+		for(int i=0; i<3; i++)
 		{
 			tmp.sendPacket();
 			System.out.println("reading from epuck");
-			tmp.readPacket2();
 			tmp.readPacket2();
 		}
 		tmp.closeIO();

@@ -1,16 +1,36 @@
-#include "e_po3030k.h"
-#include "e_uart_char.h"
-#include "e_I2C_protocol.h"
-#include "e_init_port.h"
+#include "./camera/fast_2_timer/e_po3030k.h"
+#include "./uart/e_uart_char.h"
+#include "./I2C/e_I2C_protocol.h"
+#include "./motor_led/e_init_port.h"
+#include "./motor_led/e_led.h"
 
 int buffsize = 2*40*40;
 char buffer[2*40*40];
+
+void cuteFlash(void)
+{
+	int i, j;
+	unsigned long delay = 200000;
+	for(i=0; i<8; i++)
+	{
+		e_set_led(i, 1);
+		for(j=0; j<delay; j++);
+	}
+	for(i=0; i<8; i++)
+	{
+		e_set_led(i, 0);
+		for(j=0; j<delay; j++);
+	}
+	return;
+}
+
 
 void takePhoto(void)
 {
 	e_send_uart1_char("taking photo2", 14);
 	e_po3030k_launch_capture(buffer);
 	while(!e_po3030k_is_img_ready());
+	cuteFlash();
 }
 
 int main(void) 
