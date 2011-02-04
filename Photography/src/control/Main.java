@@ -105,8 +105,10 @@ public class Main {
 			System.err.println("couldn't write to epuck");
 			e.printStackTrace();
 		}
-		System.out.println("reading string");
-		tmp.readImage2("./test.jpg");
+		System.out.println("reading data");
+		String pic = tmp.epuckBT.readString(1000);
+		System.out.println(pic);
+		//tmp.readImage2("./test.jpg");
 		
 		tmp.closeIO();
 		return;
