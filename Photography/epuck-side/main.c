@@ -1,6 +1,6 @@
 #include "./camera/fast_2_timer/e_po3030k.h"
 #include "./uart/e_uart_char.h"
-#include "./I2C/e_I2C_protocol.h"
+//#include "./I2C/e_I2C_protocol.h"
 #include "./motor_led/e_init_port.h"
 #include "./motor_led/e_led.h"
 
@@ -18,14 +18,13 @@ void init_cam(void)
 	e_po3030k_write_cam_registers();
 }*/
 
-#define CAM_BUFFER_SIZE 2*40*120
+#define CAM_BUFFER_SIZE 2*10*120
 char cam_buffer[CAM_BUFFER_SIZE];
 
 void init_cam(void)
 {
 	e_po3030k_init_cam();
-	e_po3030k_config_cam((ARRAY_WIDTH -160)/2, 0,
-		160,ARRAY_HEIGHT,4,4,RGB_565_MODE);
+	e_po3030k_config_cam(ARRAY_WIDTH/2-5, 0,10,ARRAY_HEIGHT,1,4,RGB_565_MODE);
 	e_po3030k_write_cam_registers();
 	return;
 }
@@ -74,7 +73,7 @@ int main(void)
 	cuteFlash();
 	
 	//send buffer contents to bluetooth
-	e_send_uart1_char(buffer,buffsize);
+	e_send_uart1_char(cam_buffer, CAM_BUFFER_SIZE);
 	
 	//wait to finish sending
 	while(e_uart1_sending()){}
