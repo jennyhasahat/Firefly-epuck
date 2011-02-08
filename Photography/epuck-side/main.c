@@ -54,33 +54,34 @@ void takePhoto(void)
 
 int main(void) 
 {
-	char ch;
 	e_init_port();
 	e_init_uart1();
 	init_cam();
 	
-	
-	//get ch from uart until we receive an x
-	while(ch != 'x')
+	while(1)
 	{
-		//is_char checks for incoming data from uart1
-		if(e_ischar_uart1())
+		char ch;
+		//get ch from uart until we receive an x
+		while(ch != 'x')
 		{
-			e_getchar_uart1(&ch);
+			//is_char checks for incoming data from uart1
+			if(e_ischar_uart1())
+			{
+				e_getchar_uart1(&ch);
+			}
 		}
-	}
-	takePhoto();
-	cuteFlash();
+		takePhoto();
+		cuteFlash();
+		
+		//send buffer contents to bluetooth
+		e_send_uart1_char(cam_buffer, CAM_BUFFER_SIZE);
+		
+		//wait to finish sending
+		while(e_uart1_sending()){}
+		
+		cuteFlash();
 	
-	//send buffer contents to bluetooth
-	e_send_uart1_char(cam_buffer, CAM_BUFFER_SIZE);
-	
-	//wait to finish sending
-	while(e_uart1_sending()){}
-	
-	cuteFlash();
-	
-	while(1){}
+	}	
 	return 0;
 }
 

@@ -106,9 +106,14 @@ public class Main {
 			e.printStackTrace();
 		}
 		System.out.println("reading data");
-		String pic = tmp.epuckBT.readString(1000);
-		System.out.println(pic);
-		//tmp.readImage2("./test.jpg");
+		BufferedImage image = new BufferedImage(10, 120, BufferedImage.TYPE_USHORT_565_RGB);
+		try {
+			image = ImageIO.read(tmp.recData);
+		} catch (IOException e) {
+			System.err.println("couldn't read image");
+			e.printStackTrace();
+		}
+		System.out.println(image.toString());
 		
 		tmp.closeIO();
 		return;

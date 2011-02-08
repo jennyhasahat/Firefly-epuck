@@ -1,12 +1,14 @@
 package bluetoothing;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Iterator;
 
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DeviceClass;
@@ -16,6 +18,11 @@ import javax.bluetooth.LocalDevice;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.ServiceRecord;
 import javax.bluetooth.UUID;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.metadata.IIOMetadata;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.swing.Action;
@@ -188,7 +195,7 @@ public class BluetoothComputer implements BluetoothHandler
 		BufferedInputStream buffer = new BufferedInputStream(recData);
 		
 		//wait for input
-		if(!pollEpuckForData(timeoutMS))
+		if(!isEpuckDataAvailable(timeoutMS))
 		{
 			return null;
 		}
@@ -199,7 +206,8 @@ public class BluetoothComputer implements BluetoothHandler
 		{
 			while(buffer.available() > 0)
 			{
-				strbuild.append((char) buffer.read());
+				char c = (char)buffer.read();
+				strbuild.append(c);
 			}
 		}
 		catch (IOException e) 
@@ -211,6 +219,14 @@ public class BluetoothComputer implements BluetoothHandler
 		
 		return strbuild.toString();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void closeIO()
 	{
@@ -231,7 +247,35 @@ public class BluetoothComputer implements BluetoothHandler
 	
 	
 	
-	
+	/**Checks the inputstream from the epuck to see if there is data available.
+	 * @param timeoutMS the amount of time in milliseconds to wait for data.
+	 * @return available true when there is data available.
+	 * */
+	public boolean isEpuckDataAvailable(int timeoutMS)
+	{
+		Timer time = new Timer(timeoutMS, null);
+		time.setRepeats(false);
+		time.start();
+		while(time.isRunning())
+		{
+			try 
+			{
+				if(recData.available() > 0)
+				{
+					time.stop();
+					return true;
+				}
+			} 
+			catch (IOException e) 
+			{
+				System.err.println("couldn't check epuck for data");
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		return false;
+	}
 	
 	
 	
@@ -289,36 +333,6 @@ public class BluetoothComputer implements BluetoothHandler
 		return success;
 	}
 	
-	/**Checks the inputstream from the epuck to see if there is data available.
-	 * @param timeoutMS the amount of time in milliseconds to wait for data.
-	 * @return available true when there is data available.
-	 * */
-	private boolean pollEpuckForData(int timeoutMS)
-	{
-		Timer time = new Timer(timeoutMS, null);
-		time.setRepeats(false);
-		time.start();
-		while(time.isRunning())
-		{
-			try 
-			{
-				if(recData.available() > 0)
-				{
-					time.stop();
-					return true;
-				}
-			} 
-			catch (IOException e) 
-			{
-				System.err.println("couldn't check epuck for data");
-				e.printStackTrace();
-				return false;
-			}
-		}
-		
-		return false;
-	}
-
 	//==========================================================================
 	//							DISCOVERYLISTENER METHODS
 	//==========================================================================

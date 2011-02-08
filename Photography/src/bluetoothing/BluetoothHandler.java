@@ -1,5 +1,6 @@
 package bluetoothing;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,5 +20,6 @@ public interface BluetoothHandler
 	public void sendString(String input) throws IOException;
 	public String readString(int timeoutMS);
 	
+	public boolean isEpuckDataAvailable(int timeoutMS);
 	public void closeIO();
 }
