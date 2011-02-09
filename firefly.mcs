@@ -2,105 +2,170 @@
 MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
 Version=1.0
 [File000]
-Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_init_port.o
-Folder=Intermediary
-DeviceName=dsPIC30F6014A
-LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
-LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
-LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
-PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
-SOLK=<src>|official-epuck-lib\library\motor_led\e_init_port.c|main.c|official-epuck-lib\library\camera\fast_2_timer\e_timers.c|official-epuck-lib\library\camera\fast_2_timer\e_calc.c|official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>|official-epuck-lib\library\I2C\I2C.a|official-epuck-lib\library\camera\fast_2_timer\cam_fast.a|official-epuck-lib\library\uart\e_uart_char.a||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
-SuiteArgsString=
-ToolArgsString=-g -Wall
-TraceCmdString=
-DebugOptions=-D__DEBUG
-[File001]
 Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\main.o
 Folder=Intermediary
 DeviceName=dsPIC30F6014A
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
 LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
-PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
-SOLK=<src>|official-epuck-lib\library\motor_led\e_init_port.c|main.c|official-epuck-lib\library\camera\fast_2_timer\e_timers.c|official-epuck-lib\library\camera\fast_2_timer\e_calc.c|official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>|official-epuck-lib\library\I2C\I2C.a|official-epuck-lib\library\camera\fast_2_timer\cam_fast.a|official-epuck-lib\library\uart\e_uart_char.a||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c|C:\libraries\official-epuck-lib\library\motor_led\e_init_port.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_agenda.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_motors.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_led.c||<obj>|C:\libraries\official-epuck-lib\library\uart\e_uart1_tx_char.o|C:\libraries\official-epuck-lib\library\uart\e_init_uart1.o|C:\libraries\official-epuck-lib\library\uart\e_uart1_rx_char.o||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
 SuiteArgsString=
 ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=-D__DEBUG
-[File002]
+[File001]
 Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_timers.o
 Folder=Intermediary
 DeviceName=dsPIC30F6014A
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
 LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
-PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
-SOLK=<src>|official-epuck-lib\library\motor_led\e_init_port.c|main.c|official-epuck-lib\library\camera\fast_2_timer\e_timers.c|official-epuck-lib\library\camera\fast_2_timer\e_calc.c|official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>|official-epuck-lib\library\I2C\I2C.a|official-epuck-lib\library\camera\fast_2_timer\cam_fast.a|official-epuck-lib\library\uart\e_uart_char.a||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
 SuiteArgsString=
 ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=-D__DEBUG
-[File003]
+[File002]
 Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_calc.o
 Folder=Intermediary
 DeviceName=dsPIC30F6014A
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
 LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
-PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
-SOLK=<src>|official-epuck-lib\library\motor_led\e_init_port.c|main.c|official-epuck-lib\library\camera\fast_2_timer\e_timers.c|official-epuck-lib\library\camera\fast_2_timer\e_calc.c|official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>|official-epuck-lib\library\I2C\I2C.a|official-epuck-lib\library\camera\fast_2_timer\cam_fast.a|official-epuck-lib\library\uart\e_uart_char.a||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
 SuiteArgsString=
 ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=-D__DEBUG
-[File004]
+[File003]
 Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_interrupt.o
 Folder=Intermediary
 DeviceName=dsPIC30F6014A
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
 LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-as.exe
-PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
-SOLK=<src>|official-epuck-lib\library\motor_led\e_init_port.c|main.c|official-epuck-lib\library\camera\fast_2_timer\e_timers.c|official-epuck-lib\library\camera\fast_2_timer\e_calc.c|official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>|official-epuck-lib\library\I2C\I2C.a|official-epuck-lib\library\camera\fast_2_timer\cam_fast.a|official-epuck-lib\library\uart\e_uart_char.a||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
 SuiteArgsString=
 ToolArgsString=-g
 TraceCmdString=
 DebugOptions=--defsym=__DEBUG=1
-[File005]
+[File004]
 Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_registers.o
 Folder=Intermediary
 DeviceName=dsPIC30F6014A
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
 LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
-PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
-SOLK=<src>|official-epuck-lib\library\motor_led\e_init_port.c|main.c|official-epuck-lib\library\camera\fast_2_timer\e_timers.c|official-epuck-lib\library\camera\fast_2_timer\e_calc.c|official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>|official-epuck-lib\library\I2C\I2C.a|official-epuck-lib\library\camera\fast_2_timer\cam_fast.a|official-epuck-lib\library\uart\e_uart_char.a||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File005]
+Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_I2C_master_module.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
 SuiteArgsString=
 ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=-D__DEBUG
 [File006]
+Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_I2C_protocol.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File007]
+Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_init_port.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c|C:\libraries\official-epuck-lib\library\motor_led\e_motors.c|C:\libraries\official-epuck-lib\library\motor_led\e_init_port.c|C:\libraries\official-epuck-lib\library\motor_led\e_led.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File008]
+Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_agenda.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c|C:\libraries\official-epuck-lib\library\motor_led\e_motors.c|C:\libraries\official-epuck-lib\library\motor_led\e_init_port.c|C:\libraries\official-epuck-lib\library\motor_led\e_led.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_agenda.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File009]
+Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_motors.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c|C:\libraries\official-epuck-lib\library\motor_led\e_init_port.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_agenda.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_motors.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_led.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File010]
+Location=C:\Documents and Settings\Jenny\My Documents\firefly\obj files\e_led.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c|C:\libraries\official-epuck-lib\library\motor_led\e_init_port.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_agenda.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_motors.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_led.c||<obj>||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File011]
 Location=C:\Documents and Settings\Jenny\My Documents\firefly\firefly.cof
 Folder=Output
 DeviceName=dsPIC30F6014A
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
 LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-ld.exe
-PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
-SOLK=<src>|official-epuck-lib\library\motor_led\e_init_port.c|main.c|official-epuck-lib\library\camera\fast_2_timer\e_timers.c|official-epuck-lib\library\camera\fast_2_timer\e_calc.c|official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>|official-epuck-lib\library\I2C\I2C.a|official-epuck-lib\library\camera\fast_2_timer\cam_fast.a|official-epuck-lib\library\uart\e_uart_char.a||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c|C:\libraries\official-epuck-lib\library\motor_led\e_init_port.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_agenda.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_motors.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_led.c||<obj>|C:\libraries\official-epuck-lib\library\uart\e_uart1_tx_char.o|C:\libraries\official-epuck-lib\library\uart\e_init_uart1.o|C:\libraries\official-epuck-lib\library\uart\e_uart1_rx_char.o||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
 SuiteArgsString=
 ToolArgsString=--heap=512 -Map="$(BINDIR_)$(TARGETBASE).map" --report-mem -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
 TraceCmdString=
 DebugOptions=--defsym=__MPLAB_DEBUG=1
-[File007]
+[File012]
 Location=C:\Documents and Settings\Jenny\My Documents\firefly\firefly.hex
 Folder=Output
 DeviceName=dsPIC30F6014A
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
 LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.25\bin\pic30-ld.exe
-PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
-SOLK=<src>|official-epuck-lib\library\motor_led\e_init_port.c|main.c|official-epuck-lib\library\camera\fast_2_timer\e_timers.c|official-epuck-lib\library\camera\fast_2_timer\e_calc.c|official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|official-epuck-lib\library\camera\fast_2_timer\e_registers.c||<obj>||<lib>|official-epuck-lib\library\I2C\I2C.a|official-epuck-lib\library\camera\fast_2_timer\cam_fast.a|official-epuck-lib\library\uart\e_uart_char.a||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
+PPAD=$(BINDIR)||$(TMPDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\obj files||$(AINDIR)|C:\Documents and Settings\Jenny\My Documents\firefly\official-epuck-lib\library||$(INCDIR)|C:\libraries\official-epuck-lib\library;C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\h||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|main.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_timers.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_calc.c|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_interrupt.s|C:\libraries\official-epuck-lib\library\camera\fast_2_timer\e_registers.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_master_module.c|C:\libraries\official-epuck-lib\library\I2C\e_I2C_protocol.c|C:\libraries\official-epuck-lib\library\motor_led\e_init_port.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_agenda.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_motors.c|C:\libraries\official-epuck-lib\library\motor_led\advance_one_timer\e_led.c||<obj>|C:\libraries\official-epuck-lib\library\uart\e_uart1_tx_char.o|C:\libraries\official-epuck-lib\library\uart\e_init_uart1.o|C:\libraries\official-epuck-lib\library\uart\e_uart1_rx_char.o||<lib>||<lkr>|C:\Program Files\Microchip\mplabc30\v3.25\support\dsPIC30F\gld\p30f6014A.gld||
 SuiteArgsString=
 ToolArgsString=--heap=512 -Map="$(BINDIR_)$(TARGETBASE).map" --report-mem -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
 TraceCmdString=
