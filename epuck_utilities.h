@@ -37,6 +37,7 @@ char recv_char();
 int recv_int();
 void send_int(int integer);
 void send_char(char character);
+void send_int_as_char(int integer);
 
 //motor functions
 void stop_motors();
@@ -44,7 +45,7 @@ void stop_motors();
 
 
 //other functions
-int getselector();
+int get_selector();
 void cute_flash(void);
 
 

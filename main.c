@@ -11,28 +11,31 @@
 
 #include "epuck_utilities.h"
 
-#define CAM_BUFFER_SIZE 2*120
+#define CAM_BUFFER_SIZE 2*160
 
 unsigned char camera_buffer[CAM_BUFFER_SIZE] __attribute__ ((far));
-unsigned char red_buffer[CAM_BUFFER_SIZE/2];
+unsigned char red_buffer[CAM_BUFFER_SIZE/2] __attribute__ ((far));
 
 void init_cam()
 {
 	e_po3030k_init_cam();
 	
+	//top left pixel is at (0, 120)
+	//original picture is 640 x 4
+	//zoom is 4 on both axes so final size is 120 x 1
 	e_po3030k_config_cam(0,ARRAY_HEIGHT/4, ARRAY_WIDTH, 4, 4, 4,  RGB_565_MODE);
 //	e_po3030k_set_mirror(1,1);
 	e_po3030k_write_cam_registers();
+	
+	//int actualSize = (ARRAY_WIDTH/4) * (4/4) * 2;
+	//send_int_as_char(actualSize);
 }
 
 void capture()
 {
-  e_po3030k_launch_capture((char *)camera_buffer);
-
-  while(!e_po3030k_is_img_ready());
-
-  //e_send_uart1_char((char *)camera_buffer, CAM_BUFFER_SIZE);
-  //while(e_uart1_sending());
+	e_po3030k_launch_capture((char *)camera_buffer);
+	while(!e_po3030k_is_img_ready());
+	//cute_flash();
 }
 
 
@@ -43,6 +46,7 @@ Saves to the red_buffer array the sum of each pixels R -G -B
 void extractRed(void)
 {
 	int i;
+	
 	for(i=0; i<CAM_BUFFER_SIZE/2; i++)
 	{
 		char red, green, blue;
@@ -55,6 +59,7 @@ void extractRed(void)
 		
 		red_buffer[i] = red - green - blue;
 	}
+	
 	return;
 }
 
@@ -65,7 +70,9 @@ void detectRed(int *store, int length)
 	static int numDetections = 1;
 	static int lastDetection[5] = {0, 0, 0, 0, 0};
 	
-	const int buffWidth = 120;
+	e_set_led(4, 1);
+	
+	const int buffWidth = CAM_BUFFER_SIZE/2;
 	int i, j;
 	int thisCapture[5] = {0, 0, 0, 0, 0};
 	
@@ -84,6 +91,9 @@ void detectRed(int *store, int length)
 		//average this result with the results of previous detections.
 		meanDetected[i] = (meanDetected[i]*numDetections) + thisCapture[i];
 		meanDetected[i] = meanDetected[i]/(1+numDetections);
+		
+		send_int_as_char(thisCapture[i]);
+		send_char(' ');
 	}
 	numDetections++;
 	
@@ -107,39 +117,104 @@ void detectRed(int *store, int length)
 		//copy findings into array given to function
 		store[i] = thisCapture[i];
 	}	
-	cute_flash();
+	e_set_led(4, 0);
+	return;
+}
+
+/**
+Decides a left speed and right speed for the robot wheels so that it would be wandering around.
+@param left address of int to write new left speed into. Between -800 and 800.
+@param right address of int to write new right speed into. Between -800 and 800.
+*/
+void wander(int* left, int* right)
+{
+	static char isTurning = 0;	//can't have bools apparently
+	static unsigned int refreshCounter = 0;	//counts how often this func is called
+	const unsigned int forwardCount = 5;
+	const unsigned int turnCount = 3;
+	
+	refreshCounter++;
+	
+	//if we're turning and should stop...
+	if(isTurning && (refreshCounter > turnCount) )
+	{
+		//stop turning and start going forwards at say 600 steps/s
+		*left = 400;
+		*right = 400;
+		isTurning = 0;
+		refreshCounter = 0;
+	}
+	//if we're going forward and should stop
+	else if( !isTurning && (refreshCounter > forwardCount) )
+	{
+		//start turning a random amount
+		const int turnFactors[10] = { -4, -3, -2, -1, 0, 1, 2, 3, 4, 5};
+		*left = turnFactors[rand()%10] * 100;
+		*right = turnFactors[rand()%10] * 100;
+		
+		isTurning = 1;
+		refreshCounter = 0;
+	}
+	//otherwise maintain current wheel speeds
+	//i.e. do nothing.
+	
 	return;
 }
 
  
- int main(void)
- {
-        int i;
-        long delay = 1000000;
-        long j;
+int main(void)
+{
+		long delay = 250000;
+		long j;
+		
+		e_init_port();
+		
+		/* Reset if Power on (some problem for few robots) */
+		if (RCONbits.POR)
+		{
+			RCONbits.POR=0;
+			RESET();
+		}
+		
+		e_start_agendas_processing();
+		e_init_motors();
+		e_init_prox();
+		e_init_uart1();
+		init_cam();
         
-        e_init_port();
-        e_init_uart1();
-        e_init_motors();
+        //srand(100);
         
-        //top left pixel is at (0, 120)
-		//original picture is 640 x 4
-		//zoom is 4 on both axes so final size is 120 x 1
-        init_cam();
+		e_send_uart1_char("firefly", 7);
         
+        int leftSpeed = 600;
+        int rightSpeed = 600;
+        cute_flash();
         
-        e_send_uart1_char("\f\a", 2);
         while(1)
         {
-	        int redDetection[5];
-	        //wander around
-	        //avoid obstacles
-	        //detect flashes
-	        detectRed(redDetection, 5);
-	        
-	        //wait for refresh
-	        for(j=0; j<delay; j++){}
-        }
- }
+			int redDetection[5];
+			
+			//wander around
+			wander(&leftSpeed, &rightSpeed);
+			//avoid obstacles
+			//detect flashes
+			detectRed(redDetection, 5);
+			
+			//check that selector is set at position 0
+			int selector = get_selector();
+			if(selector == 0) 
+			{
+				e_set_speed_left(leftSpeed);
+				e_set_speed_right(rightSpeed);
+				//break;
+			}else stop_motors();
+			//wait for refresh
+			for(j=0; j<delay; j++){}
+		}
+		
+		//e_stop_prox();
+		e_end_agendas_processing();
+		return 0;
+}
 
 

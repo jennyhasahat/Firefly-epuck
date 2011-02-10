@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <uart/e_uart_char.h>
 #include <motor_led/e_epuck_ports.h>
@@ -72,6 +73,25 @@ void send_char(char character)
   while(e_uart1_sending());
 }
 
+void send_int_as_char(int integer)
+{
+	int length = 0;
+	int n = integer;
+	
+	//how many digits in the integer?
+	//algorithm adapted from wikipedia itoa page (K&R implementation)
+	do length++;
+	while( (n/=10) > 0);
+	
+	char message[length];
+	sprintf(message, "%d", integer);
+	//itoa(integer, message, 10);
+	e_send_uart1_char(message, length);
+	while( e_uart1_sending() ){}
+	//e_send_uart1_char(message+1, 1);
+	//while( e_uart1_sending() ){}
+}
+
 
 
 /** Stop the motor activities
@@ -94,7 +114,7 @@ void stop_motors()
 /**Gets the position of the selector thing on top of the robot.
 @return value position of the selector from 0 to 15.
 */
-int getselector()
+int get_selector()
 {
   return SELECTOR0 + 2*SELECTOR1 + 4*SELECTOR2 + 8*SELECTOR3;
 }
