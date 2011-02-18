@@ -79,14 +79,26 @@ void send_int_as_char(int integer)
 	int n = integer;
 	
 	//how many digits in the integer?
-	//algorithm adapted from wikipedia itoa page (K&R implementation)
-	do length++;
-	while( (n/=10) > 0);
-	
-	char message[length];
-	sprintf(message, "%d", integer);
-	//itoa(integer, message, 10);
-	e_send_uart1_char(message, length);
+	if(integer > -1)
+	{
+		//algorithm adapted from wikipedia itoa page (K&R implementation)
+		do length++;
+		while( (n/=10) > 0);
+		char message[length];
+		sprintf(message, "%d", integer);
+		//itoa(integer, message, 10);
+		e_send_uart1_char(message, length);
+	}
+	else
+	{
+		//algorithm adapted from wikipedia itoa page (K&R implementation)
+		do length++;
+		while( (n/=10) > 0);
+		length++;
+		char message[length];
+		sprintf(message, "-%d", integer);
+		e_send_uart1_char(message, length);	
+	}
 	while( e_uart1_sending() ){}
 	//e_send_uart1_char(message+1, 1);
 	//while( e_uart1_sending() ){}

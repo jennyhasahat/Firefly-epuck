@@ -7,37 +7,42 @@
 #include <motor_led/advance_one_timer/e_motors.h>
 #include <motor_led/advance_one_timer/e_agenda.h>
 #include <a_d/e_prox.h>
-#include <camera/fast_2_timer/e_po3030k.h>
+#include <camera/fast_2_timer/e_poxxxx.h>
 
 #include "epuck_utilities.h"
 
-#define CAM_BUFFER_SIZE 2*160
+#define CAM_BUFFER_SIZE 4*240*2
 
-unsigned char camera_buffer[CAM_BUFFER_SIZE] __attribute__ ((far));
-unsigned char red_buffer[CAM_BUFFER_SIZE/2] __attribute__ ((far));
+char camera_buffer[CAM_BUFFER_SIZE] __attribute__ ((far));
+//char red_buffer[CAM_BUFFER_SIZE/2] __attribute__ ((far));
 
 void init_cam()
 {
-	e_po3030k_init_cam();
+	e_poxxxx_init_cam();
 	
-	//top left pixel is at (0, 120)
-	//original picture is 640 x 4
-	//zoom is 4 on both axes so final size is 120 x 1
-	e_po3030k_config_cam(0,ARRAY_HEIGHT/4, ARRAY_WIDTH, 4, 4, 4,  RGB_565_MODE);
-//	e_po3030k_set_mirror(1,1);
-	e_po3030k_write_cam_registers();
-	
-	//int actualSize = (ARRAY_WIDTH/4) * (4/4) * 2;
-	//send_int_as_char(actualSize);
+	e_poxxxx_config_cam((ARRAY_WIDTH/2)-4,0, 8, ARRAY_HEIGHT, 2, 2,  RGB_565_MODE);
+	e_poxxxx_set_mirror(1,1);
+	e_poxxxx_write_cam_registers();
 }
 
 void capture()
 {
-	e_po3030k_launch_capture((char *)camera_buffer);
-	while(!e_po3030k_is_img_ready());
+	e_poxxxx_launch_capture((char *)camera_buffer);
+	while(!e_poxxxx_is_img_ready());
 	//cute_flash();
 }
 
+void printBuffer(void)
+{
+	int i;
+	
+	for(i=0; i<CAM_BUFFER_SIZE; i++)
+	{
+		send_char(camera_buffer[i]);
+		//send_char(' ');
+	}
+	return;
+}
 
 /**
 Takes the image and extracts the red green and blue values. 
@@ -57,7 +62,7 @@ void extractRed(void)
 		blue = ((camera_buffer[2*i+1] & 0x1F) << 3);
 		green = (((camera_buffer[2*i] & 0x07) << 5) | ((camera_buffer[2*i+1] & 0xE0) >> 3));
 		
-		red_buffer[i] = red - green - blue;
+		camera_buffer[i] = red - green - blue;
 	}
 	
 	return;
@@ -86,14 +91,11 @@ void detectRed(int *store, int length)
 		//sum red in each section
 		for(j=0; j<buffWidth/5; j++)
 		{
-			thisCapture[i] += red_buffer[i*buffWidth/5 + j];
+			thisCapture[i] += camera_buffer[i*buffWidth/5 + j];
 		}
 		//average this result with the results of previous detections.
 		meanDetected[i] = (meanDetected[i]*numDetections) + thisCapture[i];
 		meanDetected[i] = meanDetected[i]/(1+numDetections);
-		
-		send_int_as_char(thisCapture[i]);
-		send_char(' ');
 	}
 	numDetections++;
 	
@@ -164,7 +166,7 @@ void wander(int* left, int* right)
  
 int main(void)
 {
-		long delay = 250000;
+		long delay = 500000;
 		long j;
 		
 		e_init_port();
@@ -192,13 +194,44 @@ int main(void)
         
         while(1)
         {
-			int redDetection[5];
+	        //wait for signal to take picture
+			char ch=' ';
+			//get ch from uart until we receive an x
+			while(ch != 'x')
+			{
+				//is_char checks for incoming data from uart1
+				if(e_ischar_uart1())
+				{
+					e_getchar_uart1(&ch);
+				}
+			}
 			
 			//wander around
-			wander(&leftSpeed, &rightSpeed);
+		//	wander(&leftSpeed, &rightSpeed);
 			//avoid obstacles
 			//detect flashes
-			detectRed(redDetection, 5);
+		//	detectRed(redDetection, 5);
+			capture();
+			e_send_uart1_char(camera_buffer, CAM_BUFFER_SIZE);
+			while(e_uart1_sending()){}
+			cute_flash();
+			
+			extractRed();
+			
+			//wait for signal to take picture
+			ch=' ';
+			//get ch from uart until we receive an x
+			while(ch != 'x')
+			{
+				//is_char checks for incoming data from uart1
+				if(e_ischar_uart1())
+				{
+					e_getchar_uart1(&ch);
+				}
+			}
+			e_send_uart1_char(camera_buffer, CAM_BUFFER_SIZE/2);
+			while(e_uart1_sending()){}
+			cute_flash();
 			
 			//check that selector is set at position 0
 			int selector = get_selector();
@@ -209,7 +242,7 @@ int main(void)
 				//break;
 			}else stop_motors();
 			//wait for refresh
-			for(j=0; j<delay; j++){}
+		//	for(j=0; j<delay; j++){}
 		}
 		
 		//e_stop_prox();
