@@ -44,12 +44,10 @@ void extractRed(void)
 		//RGB 565 stores R as 5 bytes, G as next 6 and B as last 5. Making 16bits
 		//all values are stored as the 5 (or 6 for green) MSB in the char
 		red = (camera_buffer[2*i] & 0xF8);
-		blue = ((camera_buffer[2*i+1] & 0x1F) << 3);
-		green = (((camera_buffer[2*i] & 0x07) << 5) | ((camera_buffer[2*i+1] & 0xE0) >> 3));
+		//blue = ((camera_buffer[2*i+1] & 0x1F) << 3);
+		//green = (((camera_buffer[2*i] & 0x07) << 5) | ((camera_buffer[2*i+1] & 0xE0) >> 3));
 		
-		out = red - green - blue;
-		if(out < 0)	camera_buffer[i] = 0;
-		else camera_buffer[i] = out;
+		out = red;// - green - blue;
 	}
 	
 	return;
