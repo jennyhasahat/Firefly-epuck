@@ -14,16 +14,17 @@
 //something which allows us to use an interrupt to do the led flash.
 //#define _ISRFAST	__attribute__((interrupt,shadow))
 
-#define IMAGE_WIDTH			160
+#define IMAGE_WIDTH			80
 #define IMAGE_HEIGHT		15
 #define CAM_BUFFER_SIZE IMAGE_WIDTH*IMAGE_HEIGHT*2
-#define NUM_IMAGE_SEGMENTS	5
+#define NUM_IMAGE_SEGMENTS	1
 
 //variables that are pretty useful to have globally
 
 char camera_buffer[CAM_BUFFER_SIZE]; // __attribute__ ((far));
 char isTurning = 0;	//flag indicating if epuck is currently turning (can't have bools apparently)
 int flashCounter = 0;
+char isFlashing = 0;
 
 /**
 Calls all the functions that initialise the epuck hardware we're going to use.
@@ -49,7 +50,7 @@ void init_epuck()
 	e_poxxxx_init_cam();
 	
 	/*takes a 640x240 image reduces by 4 and 16 to a 160x15 image*/
-	e_poxxxx_config_cam(0,ARRAY_HEIGHT/2, ARRAY_WIDTH, ARRAY_HEIGHT/2, 4, 16,  RGB_565_MODE);
+	e_poxxxx_config_cam(0, 0, ARRAY_WIDTH, (ARRAY_HEIGHT*0.5), 8, 16,  RGB_565_MODE);
 	e_poxxxx_set_mirror(1,1);
 	e_poxxxx_write_cam_registers();
 }
@@ -71,6 +72,7 @@ void stopFlash(void)
 	e_set_led(10, 0);
 	flashCounter = 0;	
 	//tell agenda not to continue timing this function.
+	isFlashing = 0;
 	e_destroy_agenda(stopFlash);
 }
 
@@ -80,10 +82,15 @@ Uses an interrupt timer to do this.
 */
 void startFlash(void)
 {
-	//turn LEDs on...
-	e_set_led(10, 1);	//using led value 0-7 sets a specific LED any other sets them all.
-	//tell agenda to stop flashing every 5 secs.
-	e_activate_agenda(stopFlash, 50000);
+	//if the robot is not already flashing...
+	if(!isFlashing)
+	{
+		//turn LEDs on...
+		e_set_led(10, 1);	//using led value 0-7 sets a specific LED any other sets them all.
+		//tell agenda to stop flashing every 5 secs.
+		e_activate_agenda(stopFlash, 30000);
+		isFlashing = 1;
+	}
 }
 
 
@@ -98,7 +105,7 @@ void extractRed(void)
 	
 	for(i=0; i<CAM_BUFFER_SIZE/2; i++)
 	{
-		char red; //, green, blue;
+		int red; //, green, blue;
 		
 		//RGB 565 stores R as 5 bytes, G as next 6 and B as last 5. Making 16bits
 		//all values are stored as the 5 (or 6 for green) MSB in the char
@@ -106,7 +113,11 @@ void extractRed(void)
 	//	blue = ((camera_buffer[2*i+1] & 0x1F) << 3);
 	//	green = (((camera_buffer[2*i] & 0x07) << 5) | ((camera_buffer[2*i+1] & 0xE0) >> 3));
 		
-		camera_buffer[i] = red; // - green - blue;
+		//kinda want red and magenta but NOT white or yellow.
+		//therefore green has negative effect.
+		
+		if(red < 120) camera_buffer[i] = 0;
+		else camera_buffer[i] = 10;
 	}
 	
 	return;
@@ -124,54 +135,70 @@ If a flash is detected in the same segment twice in a row then it's assumed to b
 */
 int numberFlashesDetected(void)
 {
-	static int meanDetected[NUM_IMAGE_SEGMENTS] = {0, 0, 0, 0, 0};
-	static int numDetections = 1;
-	static int lastDetection[NUM_IMAGE_SEGMENTS] = {0, 0, 0, 0, 0};
+//	static unsigned int meanDetected[NUM_IMAGE_SEGMENTS] = {0, 0, 0, 0, 0};
+//	static unsigned int lastCapture[NUM_IMAGE_SEGMENTS] = {0, 0, 0, 0, 0};
+//	unsigned int thisCapture[NUM_IMAGE_SEGMENTS] = {0, 0, 0, 0, 0};
+
+	const int pixelsPerSegment = IMAGE_WIDTH*IMAGE_HEIGHT/NUM_IMAGE_SEGMENTS;
+	const int memoryLength = 3;
 	
-	const int bytesPerSegment = 2*IMAGE_WIDTH*IMAGE_HEIGHT/NUM_IMAGE_SEGMENTS;
+	unsigned int meanDetected[NUM_IMAGE_SEGMENTS] = {0};
+	static unsigned int lastCapture[NUM_IMAGE_SEGMENTS][3];
+	static int lastResult = 0;
+	unsigned int thisCapture[NUM_IMAGE_SEGMENTS] = {0};
+	
 	int i, j;
-	int thisCapture[NUM_IMAGE_SEGMENTS] = {0, 0, 0, 0, 0};
+	
 	int result = 0; //the variable to return
 	
 	//take picture
 	capture();
+	extractRed();
 
 	//divide red buffer into NUM_IMAGE_SEGMENTS vertical sections
 	for(i=0; i<NUM_IMAGE_SEGMENTS; i++)
 	{
 		//sum red in each section
-		for(j=0; j<bytesPerSegment; j+=2)
+		for(j=0; j<pixelsPerSegment; j++)
 		{
-			//sum only red elements for each pixel
-			thisCapture[i] += (camera_buffer[j] & 0xF8);
+			thisCapture[i] += camera_buffer[i*pixelsPerSegment + j];
 		}
 		
+		//average this result with the remembered results of previous detections.
+		meanDetected[i] = 0;
+		for(j=0; j<memoryLength; j++)
+		{
+			meanDetected[i] += lastCapture[i][j];
+		}
+		meanDetected[i] = meanDetected[i] / memoryLength;
+		
+		send_char('M');
+		send_int_as_char(meanDetected[i]);	
+		send_char('T');
 		send_int_as_char(thisCapture[i]);
+		send_char(' ');	
 		
-		//average this result with the results of previous detections.
-		meanDetected[i] = (meanDetected[i]*numDetections) + thisCapture[i];
-		meanDetected[i] = meanDetected[i]/(1+numDetections);
-		
-		//did we see a red light? If thisCapture > meanDetected then yes!
-		if(thisCapture[i] > meanDetected[i])
+		//did we see a red light? If thisCapture > (meanDetected + some%) then yes!
+		if(thisCapture[i] > (meanDetected[i] * 2.5))
 		{
 			//did we see a red light in this section last time? 
-			if(lastDetection[i] == 1)
+			if(lastResult > 0)
 			{
 				//If so then don't report the detection.
 				thisCapture[i] = 0;
 			}
-			else thisCapture[i] = 1;
-		}else thisCapture[i] = 0;
+			else result += 1;
+		}else result = 0;
 		
-		//update lastDetection
-		lastDetection[i] = thisCapture[i];
-		//sum findings
-		result = result+thisCapture[i];	
+		//update lastCapture
+		for(j=memoryLength; j>0; j--)
+		{
+			lastCapture[i][j] = lastCapture[i][j-1];
+		}	
+		lastCapture[i][0] = thisCapture[i];
 	}
-	numDetections++;
-	
-	//and return the sum
+
+	//and return the sum of the number of segments which found a flash
 	return result;
 }
 
@@ -253,7 +280,7 @@ int main(void)
 		long delay = 500000;
 		long j;
 		const int flashThreshold = 50;
-		const int flashIncrement = 10;
+		const int flashIncrement = 5;
 		
 	
 		init_epuck();
@@ -274,7 +301,12 @@ int main(void)
 			//avoid obstacles
 			avoidObstacles(&leftSpeed, &rightSpeed);
 			//detect flashes
-			flashCounter += flashIncrement*numberFlashesDetected();
+			if(numberFlashesDetected() > 0)
+			{
+				flashCounter += flashIncrement;
+				e_send_uart1_char("flash detected", 14);
+				while( e_uart1_sending() ){}
+			}
 			
 			//if the flash counter reaches our threshold then flash leds
 			if(flashCounter > flashThreshold)
@@ -301,12 +333,12 @@ int main(void)
 			for(j=0; j<delay; j++){}
 			
 			//toggle LED 4
-			e_set_led(4, 2);
+	//		e_set_led(4, 2);
 			send_int_as_char(flashCounter);
 			send_char(' ');
 		}
 		
-	//	e_stop_prox();
+		e_stop_prox();
 		e_end_agendas_processing();
 		return 0;
 }

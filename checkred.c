@@ -7,8 +7,8 @@
 
 #include "epuck_utilities.h"
 
-//#define CAM_BUFFER_SIZE 4*(480/2)*2
-#define CAM_BUFFER_SIZE 40*40*2
+//#define CAM_BUFFER_SIZE 80*15*2
+#define CAM_BUFFER_SIZE 80*15*2
 
 char camera_buffer[CAM_BUFFER_SIZE]; // __attribute__ ((far));
 //char red_buffer[CAM_BUFFER_SIZE/2] __attribute__ ((far));
@@ -16,7 +16,7 @@ char camera_buffer[CAM_BUFFER_SIZE]; // __attribute__ ((far));
 void init_cam()
 {
 	e_poxxxx_init_cam();
-	e_poxxxx_config_cam(0,0,640,480,16,12,RGB_565_MODE);
+	e_poxxxx_config_cam(0, 0, ARRAY_WIDTH, (ARRAY_HEIGHT*0.5), 8, 16,  RGB_565_MODE);
 	e_poxxxx_set_mirror(1, 1);
 	e_poxxxx_write_cam_registers();
 }
@@ -58,22 +58,34 @@ void startFlash(void)
 Takes the image and extracts the red green and blue values. 
 Saves to the red_buffer array the sum of each pixels R -G -B
 */
-void extractRed(void)
+void extractRed(int threshold)
 {
 	int i;
+/*	e_send_uart1_char("Threshold:", 10);
+	while(e_uart1_sending()){}
+	send_int_as_char(threshold);
+	send_char(' ');*/
 	
 	for(i=0; i<CAM_BUFFER_SIZE/2; i++)
 	{
-		char red, green, blue;
-		int out;
+		int red, green, out; //, blue;
 		
 		//RGB 565 stores R as 5 bytes, G as next 6 and B as last 5. Making 16bits
 		//all values are stored as the 5 (or 6 for green) MSB in the char
 		red = (camera_buffer[2*i] & 0xF8);
-		//blue = ((camera_buffer[2*i+1] & 0x1F) << 3);
-		//green = (((camera_buffer[2*i] & 0x07) << 5) | ((camera_buffer[2*i+1] & 0xE0) >> 3));
+	//	blue = ((camera_buffer[2*i+1] & 0x1F) << 3);
+		green = (((camera_buffer[2*i] & 0x07) << 5) | ((camera_buffer[2*i+1] & 0xE0) >> 3));
 		
-		out = red;// - green - blue;
+		//kinda want red and magenta but NOT white or yellow.
+		//therefore green has negative effect.
+		out = red - (green/2);
+		if(out < 50) camera_buffer[i] = 0;
+		else camera_buffer[i] = 10;
+	
+	send_int_as_char(out);
+	send_char(':');
+	send_int_as_char(camera_buffer[i]);
+	send_char(' ');
 	}
 	
 	return;
@@ -96,10 +108,11 @@ int main(void)
         e_init_uart1();
         
 		e_send_uart1_char("checkred ", 9);
+		while(e_uart1_sending()){}
         //cute_flash();
         
         while(1)
-        {
+        {	        
 	        //wait for signal to take picture
 			char ch=' ';
 			//get ch from uart until we receive an x
@@ -111,8 +124,10 @@ int main(void)
 					e_getchar_uart1(&ch);
 				}
 			}
-			startFlash();
-		/*	e_poxxxx_launch_capture(camera_buffer);
+			
+			
+
+			e_poxxxx_launch_capture(camera_buffer);
 			while(!e_poxxxx_is_img_ready());
 			
 			e_send_uart1_char(camera_buffer, CAM_BUFFER_SIZE);
@@ -132,10 +147,9 @@ int main(void)
 					e_getchar_uart1(&ch);
 				}
 			}
-			extractRed();
+			extractRed(120);
 			e_send_uart1_char(camera_buffer, CAM_BUFFER_SIZE/2);
 			while(e_uart1_sending()){}
-			*/
 		}
 		
 		return 0;
