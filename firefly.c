@@ -7,7 +7,6 @@
 #include <motor_led/advance_one_timer/e_motors.h>
 #include <motor_led/advance_one_timer/e_agenda.h>
 #include <a_d/e_prox.h>
-#include <a_d/e_ad_conv.h>
 #include <camera/fast_2_timer/e_poxxxx.h>
 
 #include "epuck_utilities.h"
@@ -15,16 +14,16 @@
 //something which allows us to use an interrupt to do the led flash.
 //#define _ISRFAST	__attribute__((interrupt,shadow))
 
-#define IMAGE_WIDTH			80
+#define IMAGE_WIDTH			160
 #define IMAGE_HEIGHT		15
 #define CAM_BUFFER_SIZE IMAGE_WIDTH*IMAGE_HEIGHT*2
 #define NUM_IMAGE_SEGMENTS	5
 
 //variables that are pretty useful to have globally
 
-char camera_buffer[CAM_BUFFER_SIZE] __attribute__ ((far));
+char camera_buffer[CAM_BUFFER_SIZE]; // __attribute__ ((far));
 char isTurning = 0;	//flag indicating if epuck is currently turning (can't have bools apparently)
-
+int flashCounter = 0;
 
 /**
 Calls all the functions that initialise the epuck hardware we're going to use.
@@ -50,30 +49,42 @@ void init_epuck()
 	e_poxxxx_init_cam();
 	
 	/*takes a 640x240 image reduces by 4 and 16 to a 160x15 image*/
-	e_poxxxx_config_cam(0,ARRAY_HEIGHT/2, ARRAY_HEIGHT/2, ARRAY_WIDTH, 8, 16,  RGB_565_MODE);
+	e_poxxxx_config_cam(0,ARRAY_HEIGHT/2, ARRAY_WIDTH, ARRAY_HEIGHT/2, 4, 16,  RGB_565_MODE);
 	e_poxxxx_set_mirror(1,1);
 	e_poxxxx_write_cam_registers();
 }
 
 /**Fills the camera_buffer array with pixel data from the camera.*/
 void capture()
-{
-	e_poxxxx_launch_capture((char *)camera_buffer);
+{	
+	e_poxxxx_launch_capture(camera_buffer);
 	while(!e_poxxxx_is_img_ready());
-	//cute_flash();
 }
 
+
+/**
+Function to turn off the LEDs. This function is automatically called by an agenda set up in startFlash().
+*/
+void stopFlash(void)
+{
+	//turn LEDs off
+	e_set_led(10, 0);
+	flashCounter = 0;	
+	//tell agenda not to continue timing this function.
+	e_destroy_agenda(stopFlash);
+}
 
 /**
 Function to flash all the leds.
 Uses an interrupt timer to do this.
 */
-void flash(void)
+void startFlash(void)
 {
-
-
+	//turn LEDs on...
+	e_set_led(10, 1);	//using led value 0-7 sets a specific LED any other sets them all.
+	//tell agenda to stop flashing every 5 secs.
+	e_activate_agenda(stopFlash, 50000);
 }
-
 
 
 /**
@@ -117,32 +128,30 @@ int numberFlashesDetected(void)
 	static int numDetections = 1;
 	static int lastDetection[NUM_IMAGE_SEGMENTS] = {0, 0, 0, 0, 0};
 	
-	const int pixelsPerSegment = IMAGE_WIDTH*IMAGE_HEIGHT/NUM_IMAGE_SEGMENTS;
+	const int bytesPerSegment = 2*IMAGE_WIDTH*IMAGE_HEIGHT/NUM_IMAGE_SEGMENTS;
 	int i, j;
 	int thisCapture[NUM_IMAGE_SEGMENTS] = {0, 0, 0, 0, 0};
 	int result = 0; //the variable to return
 	
 	//take picture
 	capture();
-	//extract red elements
-	extractRed();
+
 	//divide red buffer into NUM_IMAGE_SEGMENTS vertical sections
 	for(i=0; i<NUM_IMAGE_SEGMENTS; i++)
 	{
 		//sum red in each section
-		for(j=0; j<pixelsPerSegment; j++)
+		for(j=0; j<bytesPerSegment; j+=2)
 		{
-			thisCapture[i] += camera_buffer[i*pixelsPerSegment + j];
+			//sum only red elements for each pixel
+			thisCapture[i] += (camera_buffer[j] & 0xF8);
 		}
+		
+		send_int_as_char(thisCapture[i]);
+		
 		//average this result with the results of previous detections.
 		meanDetected[i] = (meanDetected[i]*numDetections) + thisCapture[i];
 		meanDetected[i] = meanDetected[i]/(1+numDetections);
-	}
-	numDetections++;
-	
-	//check results for red
-	for(i=0; i<NUM_IMAGE_SEGMENTS; i++)
-	{
+		
 		//did we see a red light? If thisCapture > meanDetected then yes!
 		if(thisCapture[i] > meanDetected[i])
 		{
@@ -158,8 +167,10 @@ int numberFlashesDetected(void)
 		//update lastDetection
 		lastDetection[i] = thisCapture[i];
 		//sum findings
-		result = result+thisCapture[i];
-	}	
+		result = result+thisCapture[i];	
+	}
+	numDetections++;
+	
 	//and return the sum
 	return result;
 }
@@ -239,9 +250,8 @@ Initialises the epuck and calls the behaviour functions. This function is where 
 */
 int main(void)
 {
-		long delay = 200000;
+		long delay = 500000;
 		long j;
-		int flashCounter = 0;
 		const int flashThreshold = 50;
 		const int flashIncrement = 10;
 		
@@ -251,10 +261,11 @@ int main(void)
         //srand(100);
         
 		e_send_uart1_char("firefly", 7);
+		while( e_uart1_sending() ){}
         
         int leftSpeed = 600;
         int rightSpeed = 600;
-        cute_flash();
+		snake_led();
         
         while(1)
         {			
@@ -263,7 +274,7 @@ int main(void)
 			//avoid obstacles
 			avoidObstacles(&leftSpeed, &rightSpeed);
 			//detect flashes
-		//	flashCounter = flashIncrement*numberFlashesDetected();
+			flashCounter += flashIncrement*numberFlashesDetected();
 			
 			//if the flash counter reaches our threshold then flash leds
 			if(flashCounter > flashThreshold)
@@ -271,7 +282,7 @@ int main(void)
 				//reset counter
 				flashCounter = 0;
 				//flash lights
-				//flash();
+				startFlash();
 			}
 			
 			//check that selector is set at position 0
@@ -287,7 +298,7 @@ int main(void)
 			flashCounter++;
 			
 			//wait for refresh
-		//	for(j=0; j<delay; j++){}
+			for(j=0; j<delay; j++){}
 			
 			//toggle LED 4
 			e_set_led(4, 2);

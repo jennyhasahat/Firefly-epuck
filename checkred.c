@@ -1,11 +1,11 @@
 #include <camera/fast_2_timer/e_poxxxx.h>
 #include <motor_led/e_init_port.h>
-//#include <motor_led/advance_one_timer/e_agenda.h>
-//#include <motor_led/advance_one_timer/e_led.h>
+#include <motor_led/advance_one_timer/e_agenda.h>
+#include <motor_led/advance_one_timer/e_led.h>
 #include <motor_led/e_epuck_ports.h>
 #include <uart/e_uart_char.h>
 
-//#include "epuck_utilities.h"
+#include "epuck_utilities.h"
 
 //#define CAM_BUFFER_SIZE 4*(480/2)*2
 #define CAM_BUFFER_SIZE 40*40*2
@@ -25,6 +25,32 @@ void capture()
 {
 	e_poxxxx_launch_capture(camera_buffer);
 	while(!e_poxxxx_is_img_ready());
+}
+
+/**
+Function to turn off the LEDs. This function is automatically called by an agenda set up in startFlash().
+*/
+void stopFlash(void)
+{
+	e_send_uart1_char("stopping flash ", 15);
+	while( e_uart1_sending() ){}
+	//turn LEDs off
+	e_set_led(10, 0);
+	e_destroy_agenda(stopFlash);
+}
+
+/**
+Function to flash all the leds.
+Uses an interrupt timer to do this.
+*/
+void startFlash(void)
+{
+	//turn LEDs on...
+	e_set_led(10, 1);	//using led value 0-7 sets a specific LED any other sets them all.
+	//tell agenda to stop flashing every 5 secs.
+	int result = e_activate_agenda(stopFlash, 50000);
+	send_int_as_char(result);
+	while( e_uart1_sending() ){}
 }
 
 
@@ -65,7 +91,7 @@ int main(void)
 			RESET();
 		}
 		
-	//	e_start_agendas_processing();
+		e_start_agendas_processing();
 		init_cam();
         e_init_uart1();
         
@@ -85,14 +111,15 @@ int main(void)
 					e_getchar_uart1(&ch);
 				}
 			}
-			
-			e_poxxxx_launch_capture(camera_buffer);
+			startFlash();
+		/*	e_poxxxx_launch_capture(camera_buffer);
 			while(!e_poxxxx_is_img_ready());
 			
 			e_send_uart1_char(camera_buffer, CAM_BUFFER_SIZE);
 			while(e_uart1_sending()){}
 			//cute_flash();
-			
+		
+				
 			
 			//wait for signal to take picture
 			ch=' ';
@@ -108,7 +135,7 @@ int main(void)
 			extractRed();
 			e_send_uart1_char(camera_buffer, CAM_BUFFER_SIZE/2);
 			while(e_uart1_sending()){}
-			//cute_flash();
+			*/
 		}
 		
 		return 0;
