@@ -1,17 +1,15 @@
 #include <stdlib.h>	//for random number generator
 #include <stdio.h>	//for sprintf
 
-#include <uart/e_uart_char.h>
-#include <motor_led/e_epuck_ports.h>
-#include <motor_led/e_init_port.h>
-#include <motor_led/advance_one_timer/e_led.h>
-#include <motor_led/advance_one_timer/e_motors.h>
-#include <motor_led/advance_one_timer/e_agenda.h>
-#include <a_d/e_prox.h>
-#include <camera/fast_2_timer/e_poxxxx.h>
+#include "epfl/uart/e_uart_char.h"
+#include "epfl/motor_led/e_epuck_ports.h"
+#include "epfl/motor_led/e_init_port.h"
+#include "epfl/motor_led/advance_one_timer/e_led.h"
+#include "epfl/motor_led/advance_one_timer/e_motors.h"
+#include "epfl/motor_led/advance_one_timer/e_agenda.h"
+#include "epfl/a_d/e_prox.h"
+#include "epfl/camera/fast_2_timer/e_poxxxx.h"
 
-//something which allows us to use an interrupt to do the led flash.
-//#define _ISRFAST	__attribute__((interrupt,shadow))
 
 #define IMAGE_WIDTH			80
 #define IMAGE_HEIGHT		15
@@ -20,11 +18,12 @@
 
 //variables that are pretty useful to have globally
 
-char camera_buffer[CAM_BUFFER_SIZE]; // __attribute__ ((far));
-char isTurning = 0;	//flag indicating if epuck is currently turning (can't have bools apparently)
-int flashCounter = 0; //variable that times when the robot should flash
-char isFlashing = 0; //flag indicating if epuck is currently flashing (can't have bools apparently)
-
+char camera_buffer[CAM_BUFFER_SIZE]; 
+int flashCounter = 0; 	//variable that times when the robot should flash
+char isFlashing = 0; 	//flag indicating if epuck is currently flashing (can't have bools apparently)
+char isTurning = 0;		//flag indicating if epuck is currently turning (can't have bools apparently)
+//int leftSpeed;	//speed of left motor
+//int rightSpeed;	//speed of right motor
 
 /**Gets the position of the selector thing on top of the robot.
 @return value position of the selector from 0 to 15.
@@ -322,7 +321,7 @@ void avoidObstacles(int* left, int* right)
 	//	isTurning = 1;
 		*left = -turnspeed;
 		*right = turnspeed;
-		e_send_uart1_char("ahead ", 6);
+//		e_send_uart1_char("ahead ", 6);
 		while( e_uart1_sending() ){}
 	}//if there is something to the left
 	else if(scoreLeft > 900)
@@ -332,7 +331,7 @@ void avoidObstacles(int* left, int* right)
 		//turn right slowly
 		*left = turnspeed;
 		*right = -turnspeed;
-		e_send_uart1_char("left ", 5);
+//		e_send_uart1_char("left ", 5);
 		while( e_uart1_sending() ){}
 	}
 	else if(scoreRight > 900)
@@ -342,7 +341,7 @@ void avoidObstacles(int* left, int* right)
 		//turn right slowly
 		*left = -turnspeed;
 		*right = turnspeed;
-		e_send_uart1_char("right ", 6);
+//		e_send_uart1_char("right ", 6);
 		while( e_uart1_sending() ){}
 	}
 	
@@ -357,7 +356,11 @@ Decides a left speed and right speed for the robot wheels so that it would be wa
 void wander(int* left, int* right)
 {
 	static unsigned int refreshCounter = 0;	//counts how often this func is called
-	const unsigned int forwardCount = 5;
+	static int L = 0;
+	static int R = 0;
+	static int dummy; //not used. the last declared static seem to get assigned properly in this part of code
+
+	const unsigned int forwardCount = 6;
 	const unsigned int turnCount = 3;
 	
 	refreshCounter++;
@@ -366,29 +369,34 @@ void wander(int* left, int* right)
 	if(isTurning && (refreshCounter > turnCount) )
 	{
 		//stop turning and start going forwards at say 600 steps/s
-		*left = 400;
-		*right = 400;
+		R = 400;
+		L = 400;
 		isTurning = 0;
 		refreshCounter = 0;
+		e_send_uart1_char("forward ", 8);
+		while( e_uart1_sending() ){}
 	}
 	//if we're going forward and should stop
 	else if( !isTurning && (refreshCounter > forwardCount) )
 	{
 		//start turning a random amount
 		const int turnFactors[10] = { -4, -3, -2, -1, 0, 1, 2, 3, 4, 5};
-		*left = turnFactors[rand()%10] * 100;
-		*right = turnFactors[rand()%10] * 100;
+		L = turnFactors[rand()%10] * 100;
+		R = turnFactors[rand()%10] * 100;
 		
 		isTurning = 1;
 		refreshCounter = 0;
+		e_send_uart1_char("turning ", 8);
+		while( e_uart1_sending() ){}
 	}
 	//otherwise maintain current wheel speeds
 	//i.e. do nothing.
-	else if(!isTurning)
-	{
-		*left = 400;
-		*right = 400;
-	}
+	*left = L;
+	*right = R;
+	send_int_as_char(L);
+	send_char(':');
+	send_int_as_char(R);
+	send_char(' ');
 	
 	return;
 }
@@ -412,16 +420,24 @@ int main(void)
 		e_send_uart1_char("firefly", 7);
 		while( e_uart1_sending() ){}
         
-        int leftSpeed = 600;
-        int rightSpeed = 600;
-	//	snake_led();
-        
         while(1)
         {			
+	        int leftSpeed=0;	//speed of left motor
+			int rightSpeed=0;	//speed of right motor	
+				
 			//wander around
 			wander(&leftSpeed, &rightSpeed);
+
+			send_int_as_char(leftSpeed);
+			send_char(':');
+			send_int_as_char(rightSpeed);
+			send_char(' ');
 			//avoid obstacles
 			avoidObstacles(&leftSpeed, &rightSpeed);
+			send_int_as_char(leftSpeed);
+			send_char(':');
+			send_int_as_char(rightSpeed);
+			send_char(' ');
 			//detect flashes
 			if(numberFlashesDetected() > 0)
 			{
@@ -438,6 +454,13 @@ int main(void)
 				//flash lights
 				startFlash();
 			}
+			
+			send_int_as_char(leftSpeed);
+			send_char(':');
+			send_int_as_char(rightSpeed);
+			send_char(' ');
+			e_send_uart1_char(" XXXX ", 6);
+			while( e_uart1_sending() ){}
 			
 			//check that selector is set at position 0
 			int selector = get_selector();
@@ -456,8 +479,8 @@ int main(void)
 			
 			//toggle LED 4
 	//		e_set_led(4, 2);
-			send_int_as_char(flashCounter);
-			send_char(' ');
+	//		send_int_as_char(flashCounter);
+	//		send_char(' ');
 		}
 		
 		e_stop_prox();
