@@ -1,3 +1,13 @@
+/**
+Firely inspired E-Puck flashing demonstration.
+
+This code will make the e-puck flash its lights for 3 seconds and 
+it will try and synchronise its flashing with other robots also running this code.
+
+@author Jennifer Owen
+@date 6th April 2011
+*/
+
 #include <stdlib.h>	//for random number generator
 #include <stdio.h>	//for sprintf
 
