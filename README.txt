@@ -2,12 +2,11 @@ This project contains the source code for a swarm of robots to synchronise flash
 
 CONTENTS
 firefly.hex		-	a pre-compiled version of the source code, ready for uploading to an e-puck.
-epfl/			-	directory containing epuck library code developed by EPFL for use with the epucks. This is NOT the full library, only the files needed to compile this project.
+epfl/			-	directory containing epuck library code developed by EPFL for use with the epucks. This is NOT the full library, only the files needed to compile this project. See epfl/LICENSE.txt for copyright information.
 firefly.c		-	source code for making the robots flash together
 firefly.mcp		-	the MPLAB workspace with the build path and source code all set up.
 
-The source code can be read and compiled using MPLAB and Microchip's C18 compiler, or a dsPIC IDE and compilation toolchain of your choice. 
-Using MPLAB you can open firefly.mcp and click the "make all" button to compile this code.
+The source code can be read and compiled using MPLAB and Microchip's C30 toolsuite. Using MPLAB you can open firefly.mcp and click the "make all" button to compile this code.
 
 This project is an implementation of the algorithm described in the following publication:
 Christensen A., O'Grady R., and Dorigo M. (2009) "From fireflies to fault-tolerant swarms of robots", In: Transactions on Evolutionary Computation, volume 13(4) pp754-766. August 2009.
