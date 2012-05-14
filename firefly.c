@@ -11,13 +11,19 @@ it will try and synchronise its flashing with other robots also running this cod
 #include <stdlib.h>	//for random number generator
 #include <stdio.h>	//for sprintf
 
+//for getting USART output to work
 #include "epfl/uart/e_uart_char.h"
+//for everything to work
 #include "epfl/motor_led/e_epuck_ports.h"
 #include "epfl/motor_led/e_init_port.h"
+//so I can use leds
 #include "epfl/motor_led/advance_one_timer/e_led.h"
+//for setting the motors
 #include "epfl/motor_led/advance_one_timer/e_motors.h"
 #include "epfl/motor_led/advance_one_timer/e_agenda.h"
+//for reading the IR sensors
 #include "epfl/a_d/e_prox.h"
+//for the camera
 #include "epfl/camera/fast_2_timer/e_poxxxx.h"
 
 
@@ -74,7 +80,7 @@ void init_epuck()
 	e_poxxxx_config_cam(0, 0, ARRAY_WIDTH, (ARRAY_HEIGHT*0.5), 8, 16,  RGB_565_MODE);
 	//set mirror is needed because epuck camera is actually upside down
 	e_poxxxx_set_mirror(1,1);
-	//save settings
+	//save camera settings
 	e_poxxxx_write_cam_registers();
 }
 
@@ -417,85 +423,86 @@ This function is where we decide whether to flash or not using information from 
 */
 int main(void)
 {
-		long delay = 250000;
-		long j;
-		const int flashThreshold = 30;
-		const int flashIncrement = 5;
-		
+	long delay = 250000;
+	long j;
+	const int flashThreshold = 30;
+	const int flashIncrement = 5;
 	
-		init_epuck();
+	init_epuck();
+       
+       	srand(100);
         
-        srand(100);
-        
-		e_send_uart1_char("firefly", 7);
-		while( e_uart1_sending() ){}
+	e_send_uart1_char("firefly", 7);
+	while( e_uart1_sending() ){}
         
         while(1)
         {			
 	        int leftSpeed=0;	//speed of left motor
-			int rightSpeed=0;	//speed of right motor	
-				
-			//wander around
-			wander(&leftSpeed, &rightSpeed);
+		int rightSpeed=0;	//speed of right motor	
+			
+		//wander around
+		wander(&leftSpeed, &rightSpeed);
 
-			send_int_as_char(leftSpeed);
-			send_char(':');
-			send_int_as_char(rightSpeed);
-			send_char(' ');
-			//avoid obstacles
-			avoidObstacles(&leftSpeed, &rightSpeed);
-			send_int_as_char(leftSpeed);
-			send_char(':');
-			send_int_as_char(rightSpeed);
-			send_char(' ');
-			//detect flashes
-			if(numberFlashesDetected() > 0)
-			{
-				flashCounter += flashIncrement;
-				e_send_uart1_char("flash detected", 14);
-				while( e_uart1_sending() ){}
-			}
-			
-			//if the flash counter reaches our threshold then flash leds
-			if(flashCounter > flashThreshold)
-			{
-				//reset counter
-				flashCounter = 0;
-				//flash lights
-				startFlash();
-			}
-			
-			send_int_as_char(leftSpeed);
-			send_char(':');
-			send_int_as_char(rightSpeed);
-			send_char(' ');
-			e_send_uart1_char(" XXXX ", 6);
+		send_int_as_char(leftSpeed);
+		send_char(':');
+		send_int_as_char(rightSpeed);
+		send_char(' ');
+
+		//avoid obstacles
+		avoidObstacles(&leftSpeed, &rightSpeed);
+		send_int_as_char(leftSpeed);
+		send_char(':');
+		send_int_as_char(rightSpeed);
+		send_char(' ');
+
+		//detect flashes
+		if(numberFlashesDetected() > 0)
+		{
+			flashCounter += flashIncrement;
+			e_send_uart1_char("flash detected ", 15);
 			while( e_uart1_sending() ){}
-			
-			//check that selector is set at position 0
-			int selector = get_selector();
-			if(selector == 0) 
-			{
-				e_set_speed_left(leftSpeed);
-				e_set_speed_right(rightSpeed);
-				//break;
-			}else stop_motors();
-			
-			//increment flash counter
-			flashCounter++;
-			
-			//wait for refresh
-			for(j=0; j<delay; j++){}
-			
-			//toggle LED 4
-	//		e_set_led(4, 2);
-	//		send_int_as_char(flashCounter);
-	//		send_char(' ');
 		}
+			
+		//if the flash counter reaches our threshold then flash leds
+		if(flashCounter > flashThreshold)
+		{
+			//reset counter
+			flashCounter = 0;
+			//flash lights
+			startFlash();
+		}
+			
+		send_int_as_char(leftSpeed);
+		send_char(':');
+		send_int_as_char(rightSpeed);
+		send_char(' ');
+		e_send_uart1_char(" XXXX ", 6);
+		while( e_uart1_sending() ){}
+			
+		//check that selector is set at position 0
+		int selector = get_selector();
+		if(selector == 0) 
+		{
+			e_set_speed_left(leftSpeed);
+			e_set_speed_right(rightSpeed);
+			//break;
+		}else stop_motors();
 		
-		e_stop_prox();
-		e_end_agendas_processing();
-		return 0;
+		//increment flash counter
+		flashCounter++;
+		
+		//wait for refresh
+		for(j=0; j<delay; j++){}
+			
+		//toggle LED 4
+//		e_set_led(4, 2);
+//		send_int_as_char(flashCounter);
+//		send_char(' ');
+	}
+		
+	e_stop_prox();
+	e_end_agendas_processing();
+	return 0;
 }
 
 
